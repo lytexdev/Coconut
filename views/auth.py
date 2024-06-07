@@ -4,6 +4,7 @@ import bcrypt
 
 auth_bp = Blueprint('auth', __name__)
 
+
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -16,6 +17,7 @@ def login():
         else:
             flash('Invalid credentials. Please try again.')
     return render_template('login.html')
+
 
 @auth_bp.route('/logout')
 def logout():

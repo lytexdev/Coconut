@@ -2,3 +2,5 @@ Flask
 flask-limiter
 python-dotenv
 bcrypt
+psutil
+docker
