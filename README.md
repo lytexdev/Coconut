@@ -2,7 +2,7 @@
 
 ## Overview
 Simple and lightweight Home Server management tool for myself... I use Arch Linux btw :D
-But you can adjust the .env file to fit your needs.
+but you can adjust the .env file to fit your needs.
 
 ## Features
 - Login
