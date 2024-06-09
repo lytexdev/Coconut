@@ -1,0 +1,16 @@
+.header-main {
+	display: flex;
+	align-items: center;
+	padding: 1rem;
+	background-color: #121212;
+
+	.logo {
+		height: 50px;
+		margin-right: 1rem;
+	}
+
+	h1 {
+		color: $primary-color;
+		margin: 0;
+	}
+}

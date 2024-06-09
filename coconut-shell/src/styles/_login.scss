@@ -1,0 +1,45 @@
+@import '../styles/variables.scss';
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: #121212;
+	color: #fff;
+	font-family: Arial, sans-serif;
+	animation: fadeIn 1s ease-in-out;
+}
+
+.container {
+	text-align: center;
+	background-color: #1e1e1e;
+	padding: 7.5rem;
+	border-radius: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+	margin-bottom: 2.5rem;
+	color: $primary-color;
+}
+
+.form-group {
+	margin-bottom: 15px;
+
+	label {
+		display: block;
+		margin-bottom: 5px;
+		color: $primary-color;
+	}
+
+	input {
+		width: 100%;
+		padding: 10px;
+		box-sizing: border-box;
+		border: 1px solid #333;
+		border-radius: 5px;
+		background-color: #2c2c2c;
+		color: #fff;
+	}
+}
