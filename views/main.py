@@ -11,16 +11,6 @@ def index():
         return redirect(url_for('auth.login'))
     return render_template('index.html')
 
-
-@main_bp.route('/api/system_info')
-def system_info():
-    cpu_usage = psutil.cpu_percent(interval=1)
-    ram_usage = psutil.virtual_memory().percent
-    disk_usage = psutil.disk_usage('/').percent
-    disk_stats = psutil.disk_io_counters()
-    return jsonify(cpu_usage=cpu_usage, ram_usage=ram_usage, disk_usage=disk_usage)
-
-
 @main_bp.route('/api/shutdown', methods=['POST'])
 def shutdown():
     if not session.get('logged_in'):

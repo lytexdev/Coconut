@@ -55,16 +55,15 @@ python app.py
 
 ## Development
 
-**Install and compile frontend dependencies**
+**Install frontend dependencies**
 ```bash
 cd coconut-shell/
 npm install
-python build.py
 ```
 
-**Compile frontend**
+**Build frontend**
 ```bash
-python coconut-shell/build.py
+python build.py
 ```
 
 
