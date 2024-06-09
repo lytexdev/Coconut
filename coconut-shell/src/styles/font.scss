@@ -1,0 +1,12 @@
+/*
+Font SCSS file to import the font and apply it
+*/
+
+@font-face {
+    font-family: 'Recursive';
+    src: url('/src/assets/font/Recursive-VariableFont_CASL\,CRSV\,MONO\,slnt\,wght.ttf') format('truetype');
+}
+
+* {
+    font-family: 'Recursive', sans-serif, Arial;
+}

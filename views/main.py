@@ -9,10 +9,10 @@ main_bp = Blueprint('main', __name__)
 def index():
     if not session.get('logged_in'):
         return redirect(url_for('auth.login'))
-    return render_template('app.html')
+    return render_template('index.html')
 
 
-@main_bp.route('/system_info')
+@main_bp.route('/api/system_info')
 def system_info():
     cpu_usage = psutil.cpu_percent(interval=1)
     ram_usage = psutil.virtual_memory().percent
@@ -21,17 +21,17 @@ def system_info():
     return jsonify(cpu_usage=cpu_usage, ram_usage=ram_usage, disk_usage=disk_usage)
 
 
-@main_bp.route('/shutdown', methods=['POST'])
+@main_bp.route('/api/shutdown', methods=['POST'])
 def shutdown():
     if not session.get('logged_in'):
-        return redirect(url_for('auth.login'))
+        return jsonify(success=False, message="Unauthorized"), 401
     os.system(Config.SHUTDOWN_COMMAND)
-    return redirect(url_for('main.index'))
+    return jsonify(success=True, message="Shutdown initiated")
 
 
-@main_bp.route('/reboot', methods=['POST'])
+@main_bp.route('/api/reboot', methods=['POST'])
 def reboot():
     if not session.get('logged_in'):
-        return redirect(url_for('auth.login'))
+        return jsonify(success=False, message="Unauthorized"), 401
     os.system(Config.REBOOT_COMMAND)
-    return redirect(url_for('main.index'))
+    return jsonify(success=True, message="Reboot initiated")

@@ -1,0 +1,7 @@
+{
+    "editor.tabSize": 4,
+    "git.branchProtection": [
+        "master",
+        "main"
+    ],
+}
