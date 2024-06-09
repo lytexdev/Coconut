@@ -50,4 +50,3 @@ onMounted(() => {
 		</div>
 	</div>
 </template>
-

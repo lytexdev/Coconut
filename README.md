@@ -11,13 +11,31 @@ but you can adjust the .env file to fit your needs.
 - Reboot
 
 ## Requirements
-- Python 3.6+
+- Python 3.8+
+- Node.js 20+
 
 ## Installation
 **Clone the repository**
 ```bash
 git clone https://github.com/ximmanuel/Coconut.git
 cd Coconut
+```
+
+**Create a virtual environment**
+```bash
+python -m venv .venv
+```
+
+**Activate the virtual environment**
+
+Linux
+```bash
+source .venv/bin/activate
+```
+
+Fish
+```bash
+source .venv/bin/activate.fish
 ```
 
 **Install dependencies**
@@ -34,6 +52,21 @@ cp .env.example .env
 ```bash
 python app.py
 ```
+
+## Development
+
+**Install and compile frontend dependencies**
+```bash
+cd coconut-shell/
+npm install
+python build.py
+```
+
+**Compile frontend**
+```bash
+python coconut-shell/build.py
+```
+
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

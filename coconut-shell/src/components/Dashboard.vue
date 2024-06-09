@@ -12,13 +12,3 @@ import DockerContainers from './modules/Docker.vue'
         <DockerContainers />
     </main>
 </template>
-
-<style scoped lang="scss">
-.main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem;
-}
-</style>
