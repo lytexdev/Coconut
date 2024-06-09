@@ -3,6 +3,7 @@ import shutil
 import subprocess
 
 def run_npm_build():
+    cange_dir = os.chdir('./coconut-shell')
     result = subprocess.run(['npm', 'run', 'build'], capture_output=True, text=True)
     if result.returncode != 0:
         print("Error during npm run build:")

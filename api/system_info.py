@@ -3,7 +3,7 @@ import psutil
 
 api_bp = Blueprint('api', __name__)
 
-@api_bp.route('/system_info')
+@api_bp.route('system_info')
 def system_info():
     cpu_usage = psutil.cpu_percent(interval=1)
     ram_usage = psutil.virtual_memory().percent
