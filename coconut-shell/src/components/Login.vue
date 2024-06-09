@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const username = ref('');
-const password = ref('');
-const messages = ref([]);
+const username = ref('')
+const password = ref('')
+const messages = ref([])
 
 const login = () => {
 	fetch('/login', {
@@ -19,15 +19,15 @@ const login = () => {
 	.then((response) => response.json())
 	.then((data) => {
 		if (data.success) {
-			window.location.href = '/';
+			window.location.href = '/'
 		} else {
-			messages.value = [data.message];
+			messages.value = [data.message]
 		}
 	})
 	.catch((error) => {
-		console.error('Error:', error);
-	});
-};
+		console.error('Error:', error)
+	})
+}
 </script>
 
 <template>
