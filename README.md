@@ -1,14 +1,18 @@
 # Coconut
 
 ## Overview
-Simple and lightweight Home Server management tool for myself... I use Arch Linux btw :D
-but you can adjust the .env file to fit your needs.
+Simple, lightweight and self-hosted Home Server management.
 
 ## Features
-- System Information
+- Read System Information
 - Manage Docker Containers
 - Shutdown
 - Reboot
+
+## Technologies
+- **Backend**: Flask
+- **Frontend**: Vue.js, SCSS
+- **Database**: *soon*
 
 ## Requirements
 - Python 3.8+
