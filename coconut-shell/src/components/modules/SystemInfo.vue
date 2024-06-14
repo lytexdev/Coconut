@@ -1,3 +1,18 @@
+<template>
+	<div class="panel-module">
+		<div class="left-panel">
+			<h2>System Information</h2>
+			<p>CPU Usage: {{ cpuUsage }}%</p>
+			<p>RAM Usage: {{ ramUsage }}%</p>
+			<p>Disk Usage: {{ diskUsage }}</p>
+		</div>
+		<div class="right-panel">
+			<button @click="shutdown" class="btn btn-shutdown" title="Poweroff computer">Shutdown</button>
+			<button @click="reboot" class="btn btn-reboot" title="Reboot computer">Reboot</button>
+		</div>
+	</div>
+</template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 
@@ -35,18 +50,3 @@ onMounted(() => {
 	setInterval(updateSystemInfo, 2000)
 })
 </script>
-
-<template>
-	<div class="panel-module">
-		<div class="left-panel">
-			<h2>System Information</h2>
-			<p>CPU Usage: {{ cpuUsage }}%</p>
-			<p>RAM Usage: {{ ramUsage }}%</p>
-			<p>Disk Usage: {{ diskUsage }}</p>
-		</div>
-		<div class="right-panel">
-			<button @click="shutdown" class="btn btn-shutdown" title="Poweroff computer">Shutdown</button>
-			<button @click="reboot" class="btn btn-reboot" title="Reboot computer">Reboot</button>
-		</div>
-	</div>
-</template>

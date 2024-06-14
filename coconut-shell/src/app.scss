@@ -7,7 +7,7 @@ Base SCSS file to import all other SCSS files and compile them into a single CSS
 @import './styles/components';
 @import './styles/header';
 @import './styles/dashboard';
-@import './styles/modules';
+@import './styles/module';
 
 * {
 	margin: 0;
