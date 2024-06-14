@@ -2,6 +2,7 @@
 import Header from './Header.vue'
 import SystemInfo from './modules/SystemInfo.vue'
 import DockerContainers from './modules/Docker.vue'
+import Backup from './modules/Backup.vue';
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import DockerContainers from './modules/Docker.vue'
 
     <main class="main-content">
         <SystemInfo />
+        <Backup />
         <DockerContainers />
     </main>
 </template>

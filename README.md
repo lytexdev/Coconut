@@ -6,6 +6,7 @@ Simple, lightweight and self-hosted Home Server management.
 ## Features
 - Read System Information
 - Manage Docker Containers
+- Create Backup
 - Shutdown
 - Reboot
 
