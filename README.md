@@ -3,6 +3,9 @@
 ## Overview
 Simple, lightweight and self-hosted Home Server management.
 
+## Preview
+![Preview](./preview.png)
+
 ## Features
 - Read System Information
 - Manage Docker Containers
