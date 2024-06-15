@@ -1,16 +1,24 @@
 .header-main {
-	display: flex;
-	align-items: center;
-	padding: 1rem;
-	background-color: #121212;
+    position: fixed;
+    top: 0;
+	left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: $background-color;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
 
-	.logo {
-		height: 50px;
-		margin-right: 1rem;
-	}
+    .logo {
+        height: 50px;
+        margin-right: 1rem;
+    }
 
-	h1 {
-		color: $primary-color;
-		margin: 0;
-	}
+    h1 {
+        color: $primary-color;
+        margin: 0;
+        font-size: 1.5rem;
+    }
 }

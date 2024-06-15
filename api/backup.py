@@ -1,14 +1,12 @@
 import os
 import subprocess
 import threading
-from flask import Blueprint, jsonify, Response, request
+from flask import Blueprint, jsonify, request
 from dotenv import load_dotenv
-import time
 
 load_dotenv()
 
 backup_bp = Blueprint("backup_api", __name__)
-
 
 def run_backup(source_path, destination_path, max_backups):
     subprocess.run(
@@ -25,19 +23,19 @@ def run_backup(source_path, destination_path, max_backups):
 
     return None
 
-
 @backup_bp.route("/create_backup", methods=["POST"])
 def create_backup():
     source_path = os.getenv("BACKUP_SOURCE_PATH")
     destination_path = os.getenv("BACKUP_DESTINATION_PATH")
     max_backups = os.getenv("BACKUP_DELETE_ALERT", "5")
 
-    oldest_backup = run_backup(source_path, destination_path, max_backups)
+    def backup_thread():
+        run_backup(source_path, destination_path, max_backups)
+    
+    thread = threading.Thread(target=backup_thread)
+    thread.start()
 
-    if oldest_backup:
-        return jsonify({"message": "Backup started", "oldest_backup": oldest_backup})
-    else:
-        return jsonify({"message": "Backup started", "oldest_backup": None})
+    return jsonify({"message": "Backup started", "oldest_backup": None})
 
 
 @backup_bp.route("/backup_count", methods=["GET"])
@@ -51,6 +49,19 @@ def backup_count():
         ]
     )
     return jsonify({"count": count})
+
+
+@backup_bp.route("/list_backups", methods=["GET"])
+def list_backups():
+    destination_path = os.getenv("BACKUP_DESTINATION_PATH")
+    backups = sorted(
+        [
+            name
+            for name in os.listdir(destination_path)
+            if os.path.isfile(os.path.join(destination_path, name))
+        ]
+    )
+    return jsonify({"backups": backups})
 
 
 @backup_bp.route("/delete_backup", methods=["POST"])
