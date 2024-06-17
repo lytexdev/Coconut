@@ -2,18 +2,9 @@
 Base SCSS file to import all other SCSS files and compile them into a single CSS file.
 */
 @import './styles/variables';
-@import './styles/font';
-@import './styles/animations';
 @import './styles/components';
+@import './styles/animations';
 @import './styles/header';
 @import './styles/dashboard';
 @import './styles/module';
-@import './styles/login';
-@import './styles/setup';
 
-* {
-	margin: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    touch-action: manipulation;
-}
