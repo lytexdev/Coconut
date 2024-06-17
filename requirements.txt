@@ -1,5 +1,7 @@
 Flask
 flask-limiter
+flask-sqlalchemy
+flask-migrate
 python-dotenv
 bcrypt
 psutil

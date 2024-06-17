@@ -2,6 +2,9 @@ from flask import Flask, render_template
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from config import Config
+from flask import Flask
+from flask_migrate import Migrate
+from models import db
 from views.auth import auth_bp
 from views.main import main_bp
 from api.system_info import system_info_bp
@@ -13,6 +16,9 @@ app = Flask(
 )
 app.config.from_object(Config)
 rate_limiter = Limiter(get_remote_address, app=app, default_limits=[Config.RATE_LIMIT])
+
+db.init_app(app)
+migrate = Migrate(app, db)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(main_bp)
