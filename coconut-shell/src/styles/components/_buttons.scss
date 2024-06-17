@@ -1,0 +1,49 @@
+.btn {
+	background-color: $primary-color;
+	color: #fff;
+	border: none;
+	padding: 15px 25px;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s, transform 0.3s;
+
+	&:hover {
+		background-color: lighten($primary-color, 10%);
+		transform: scale(1.05);
+	}
+}
+
+.btn-danger {
+	background-color: $danger-color;
+
+	&:hover {
+		background-color: lighten($danger-color, 10%);
+	}
+}
+
+.btn-success {
+	background-color: $success-color;
+
+	&:hover {
+		background-color: lighten($success-color, 10%);
+	}
+
+}
+
+.btn-reboot {
+	background-color: $secondary-color;
+
+	&:hover {
+		background-color: lighten($secondary-color, 10%);
+	}
+}
+
+.btn-shutdown {
+	background-color: $primary-color;
+	margin-bottom: 1rem;
+
+	&:hover {
+		background-color: $hover-color;
+	}
+}
