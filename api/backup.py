@@ -8,6 +8,7 @@ load_dotenv()
 
 backup_bp = Blueprint("backup_api", __name__)
 
+
 def run_backup(source_path, destination_path, max_backups):
     subprocess.run(
         ["./static/scripts/backup.sh", source_path, destination_path, max_backups],
@@ -22,6 +23,7 @@ def run_backup(source_path, destination_path, max_backups):
         return backup_files[0]
 
     return None
+
 
 @backup_bp.route("/create_backup", methods=["POST"])
 def create_backup():
@@ -74,7 +76,4 @@ def delete_backup():
         os.remove(os.path.join(destination_path, backup_to_delete))
         return jsonify({"message": f"{backup_to_delete} deleted successfully"})
     except Exception as e:
-        return (
-            jsonify({"message": f"Error deleting {backup_to_delete}", "error": str(e)}),
-            500,
-        )
+        return (jsonify({"message": f"Error deleting {backup_to_delete}", "error": str(e)}),500)

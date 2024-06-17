@@ -3,13 +3,15 @@ import os
 import psutil
 from config import Config
 
-main_bp = Blueprint('main', __name__)
+main_bp = Blueprint("main", __name__)
 
-@main_bp.route('/')
+
+@main_bp.route("/")
 def index():
-    if not session.get('logged_in'):
-        return redirect(url_for('auth.login'))
-    return render_template('index.html')
+    if not session.get("logged_in"):
+        return redirect(url_for("auth.login"))
+    return render_template("index.html")
+
 
 @main_bp.route('/api/shutdown', methods=['POST'])
 def shutdown():

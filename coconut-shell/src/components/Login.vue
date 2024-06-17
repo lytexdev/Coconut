@@ -1,3 +1,26 @@
+<template>
+	<div class="container">
+		<h1>Login < Coconut</h1>
+
+		<form @submit.prevent="login">
+			<div class="form-group">
+				<label for="username">Nickname</label>
+				<input type="text" id="username" v-model="username" required>
+			</div>
+			<br>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" id="password" v-model="password" required>
+			</div>
+			<button type="submit" class="btn">Login</button>
+		</form>
+
+		<ul v-if="messages.length">
+			<li v-for="message in messages" :key="message">{{ message }}</li>
+		</ul>
+	</div>
+</template>
+
 <script setup>
 import { ref } from 'vue'
 
@@ -29,28 +52,3 @@ const login = () => {
 	})
 }
 </script>
-
-<template>
-	<div class="container">
-		<h1>Login < Coconut</h1>
-		<form @submit.prevent="login">
-			<div class="form-group">
-				<label for="username">Username</label>
-				<input type="text" id="username" v-model="username" required>
-			</div>
-			<br>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" id="password" v-model="password" required>
-			</div>
-			<button type="submit" class="btn">Login</button>
-		</form>
-		<ul v-if="messages.length">
-			<li v-for="message in messages" :key="message">{{ message }}</li>
-		</ul>
-	</div>
-</template>
-
-<style scoped lang="scss">
-@import '../styles/login'
-</style>

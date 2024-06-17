@@ -1,12 +1,13 @@
 # Coconut
 
 ## Overview
-Simple, lightweight and self-hosted Home Server management.
+Lightweight and self-hosted Server management tool. It is designed to be simple and easy to use. It is built with Flask and Vue.js.
 
 ## Preview
 ![Preview](./preview.png)
 
 ## Features
+- User authentication
 - Read System Information
 - Manage Docker Containers
 - Create Backup
@@ -16,7 +17,6 @@ Simple, lightweight and self-hosted Home Server management.
 ## Technologies
 - **Backend**: Flask
 - **Frontend**: Vue.js, SCSS
-- **Database**: *soon*
 
 ## Requirements
 - Python 3.8+
@@ -54,6 +54,13 @@ pip install -r requirements.txt
 **Copy .env.example to .env and edit it**
 ```bash
 cp .env.example .env
+```
+
+**Initialize the database**
+```bash
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
 ```
 
 **Run the server**
