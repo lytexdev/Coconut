@@ -4,7 +4,7 @@
 
         <div class="backup-management">
             <p>Current backups: {{ backupCount }}</p>
-            <button :class="buttonClass" :disabled="isDisabled" @click="createBackup" class="btn">{{ buttonText }}</button>
+            <button :class="buttonClass" :disabled="isDisabled" @click="createBackup">{{ buttonText }}</button>
         </div>
 
         <ul class="backup-list">
