@@ -5,20 +5,41 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    justify-content: space-between;
+    padding: 1rem 15rem;
     background-color: $background-color;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 10;
 
-    .logo {
-        height: 50px;
-        margin-right: 1rem;
+    .header-logo {
+        display: flex;
+        align-items: center;
+
+        .logo {
+            height: 50px;
+            margin-right: 1rem;
+        }
+    
+        h1 {
+            color: $primary-color;
+            margin: 0;
+            font-size: 1.5rem;
+        }
     }
 
-    h1 {
-        color: $primary-color;
-        margin: 0;
-        font-size: 1.5rem;
+    @media (max-width: 900px) {
+        flex-direction: column;
+        padding: 1.25rem;
+    }
+}
+
+.nav-main {
+    display: flex;
+    gap: 1rem;
+
+    .btn {
+        background-color: $secondary-color;
+        font-size: 14px;
+        padding: 15px 20px;
     }
 }
