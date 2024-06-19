@@ -1,0 +1,21 @@
+.backup-management {
+    display: flex;
+    justify-content: space-between;
+}
+
+.backup-list {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #444;
+    }
+
+    .btn {
+        margin-left: 10px;
+    }
+}

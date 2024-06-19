@@ -1,0 +1,14 @@
+.system-info {
+	flex-direction: row !important;
+
+    .system-info-action {
+        display: flex;
+        align-items: center;
+        color: $secondary-text-color;
+
+        .btn {
+            background: unset;
+            border: unset;
+        }
+    }
+}
