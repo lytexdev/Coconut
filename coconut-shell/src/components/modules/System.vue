@@ -30,7 +30,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import Modal from './Modal.vue'
+import Modal from '../Modal.vue'
 
 const cpuUsage = ref('Loading...')
 const ramUsage = ref('Loading...')

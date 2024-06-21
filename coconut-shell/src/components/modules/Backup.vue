@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import Modal from './Modal.vue'
+import Modal from '../Modal.vue'
 
 const buttonText = ref('Create Backup')
 const buttonClass = ref('btn')
