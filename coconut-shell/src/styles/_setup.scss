@@ -1,1 +1,6 @@
 @import './setup/module-selection';
+
+.setup-header {
+    display: flex;
+    flex-direction: column;
+}
