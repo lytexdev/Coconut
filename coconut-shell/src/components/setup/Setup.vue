@@ -3,45 +3,51 @@
         <div class="setup-header">
             <Logo />
             <h1>Create Login < Setup</h1>
+            <p>Create a Admin user to login to Coconut.
+                <br>After setup is complete, you can add more users at the configuration page.
+            </p>
         </div>
         <CreateUser />
         <div class="separator"></div>
-        <button @click="nextStep" class="btn">Next</button>
+        <button @click="nextStep" class="btn btn-success">Next</button>
     </div>
 
     <div class="container" v-else-if="setup === 2">
         <div class="setup-header">
             <Logo />
             <h1>Select Modules < Setup</h1>
+            <p>Select the modules you want to use in Coconut and the order they should appear.
+                <br>You can always change this later in the configuration page.
+            </p>
         </div>
         <ModuleSelection />
         <div class="separator"></div>
-        <button @click="nextStep" class="btn">Next</button>
+        <button @click="nextStep" class="btn btn-success">Next</button>
     </div>
 
     <div class="container" v-else>
         <div class="setup-header">
             <Logo />
-            <h1>Setup Complete</h1>
-            <p>Setup is complete! You can now login.</p>
+            <h1> X < Setup</h1>
+            <p>Setup is complete! You can now finish the setup and start using Coconut.</p>
         </div>
         <div class="separator"></div>
-        <button @click="finishSetup" class="btn btn-success">Finish Setup</button>
+        <button @click="finishSetup" class="btn btn-success" title="Click to finish the setup">Finish Setup</button>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
 import CreateUser from './CreateUser.vue';
 import ModuleSelection from './ModuleSelection.vue';
 import Logo from '../Logo.vue';
 
-const router = useRouter()
-const setup = ref(1)
+const router = useRouter();
+const setup = ref<number>(1);
 
 const nextStep = () => {
-    setup.value += 1
+    setup.value += 1;
 }
 
 const finishSetup = async () => {
@@ -51,15 +57,15 @@ const finishSetup = async () => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        const data = await response.json()
+        });
+        const data = await response.json();
         if (data.success) {
-            router.push('/')
+            router.push('/');
         } else {
-            alert('Error finishing setup')
+            alert('Error finishing setup');
         }
     } catch (error) {
-        console.error('Error:', error)
+        console.error('Error:', error);
     }
 }
 </script>

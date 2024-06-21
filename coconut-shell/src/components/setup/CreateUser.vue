@@ -18,10 +18,6 @@
         </div>
         <button type="submit" class="btn">Create User</button>
     </form>
-
-    <ul v-if="messages.length">
-        <li v-for="message in messages" :key="message">{{ message }}</li>
-    </ul>
 </template>
 
 <script setup>
@@ -38,6 +34,7 @@ const messages = ref([])
 const roles = [
     { value: 'OWNER', text: 'Owner' },
     { value: 'ADMIN', text: 'Admin' },
+    
 ]
 
 const createUser = () => {
@@ -55,9 +52,9 @@ const createUser = () => {
         .then((response) => response.json())
         .then((data) => {
             if (data.success) {
-                messages.value = ['User created successfully!']
+                alert('User created successfully!')
             } else {
-                messages.value = [data.message]
+                alert('Error creating user: ' + data.message)
             }
         })
         .catch((error) => {
