@@ -29,14 +29,11 @@ app.register_blueprint(docker_bp, url_prefix="/api")
 
 @app.before_request
 def check_for_setup():
-    setup_entry = Setup.query.first()
-    if setup_entry and setup_entry.completed:
-        return None
-    
-    if not User.query.first() and request.endpoint not in ["setup.create_user", "setup.get_setup_status", "setup.manage_modules", "setup.complete_setup", "setup.setup_index"]:
-        if request.endpoint and not request.endpoint.startswith("static"):
-            return redirect(url_for("setup.setup_index"))
-
+    setup_record = Setup.query.first()
+    if not User.query.first() or (setup_record and not setup_record.completed):
+        if request.endpoint not in ["setup.create_user", "setup.set_modules", "setup.get_setup_status", "setup.finish_setup", "setup.setup_index"]:
+            if request.endpoint and not request.endpoint.startswith("static"):
+                return redirect(url_for("setup.setup_index"))
 
 @app.route("/")
 def index():

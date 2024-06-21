@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, session, render_template
 from models import db
 from models.user import User, RoleEnum
+from models.setup import Setup
 from models.module import Module, ModuleEnum
 import bcrypt
 
@@ -65,6 +66,18 @@ def get_setup_status():
         return jsonify(no_users=False, logged_in=logged_in)
     else:
         return jsonify(no_users=True)
+
+
+@setup_bp.route("/finish", methods=["POST"])
+def finish_setup():
+    setup_record = Setup.query.first()
+    if setup_record:
+        setup_record.completed = True
+    else:
+        setup_record = Setup(completed=True)
+        db.session.add(setup_record)
+    db.session.commit()
+    return jsonify(success=True)
 
 
 @setup_bp.route("/", methods=["GET"])
