@@ -48,7 +48,6 @@ def move_and_rename_files():
                 elif filename.endswith(".js"):
                     new_file_path = os.path.join(static_folder, "main.js")
 
-                # Ensure the directory exists
                 os.makedirs(os.path.dirname(new_file_path), exist_ok=True)
 
                 print(f"Moving {file_path} to {new_file_path}")

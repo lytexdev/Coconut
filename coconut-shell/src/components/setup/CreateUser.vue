@@ -1,31 +1,27 @@
 <template>
-    <div class="container">
-        <h1>Create User < Setup</h1>
-        
-        <form @submit.prevent="createUser">
-            <div class="form-group">
-                <label for="username">Nickname</label>
-                <input type="text" id="username" v-model="username" required>
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" v-model="password" required>
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="role">Role</label>
-                <select id="role" v-model="role" required>
-                    <option v-for="role in roles" :key="role.value" :value="role.value">{{ role.text }}</option>
-                </select>
-            </div>
-            <button type="submit" class="btn">Create User</button>
-        </form>
+    <form @submit.prevent="createUser">
+        <div class="form-group">
+            <label for="username">Nickname</label>
+            <input type="text" id="username" v-model="username" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" v-model="password" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" v-model="role" required>
+                <option v-for="role in roles" :key="role.value" :value="role.value">{{ role.text }}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn">Create User</button>
+    </form>
 
-        <ul v-if="messages.length">
-            <li v-for="message in messages" :key="message">{{ message }}</li>
-        </ul>
-    </div>
+    <ul v-if="messages.length">
+        <li v-for="message in messages" :key="message">{{ message }}</li>
+    </ul>
 </template>
 
 <script setup>
@@ -59,7 +55,7 @@ const createUser = () => {
         .then((response) => response.json())
         .then((data) => {
             if (data.success) {
-                router.push('/login')
+                messages.value = ['User created successfully!']
             } else {
                 messages.value = [data.message]
             }

@@ -7,7 +7,7 @@ Lightweight and self-hosted Server management tool. It is designed to be simple 
 ![Preview](./preview.png)
 
 ## Features
-- User authentication
+- User Authentication
 - Read System Information
 - Manage Docker Containers
 - Create Backup
@@ -23,6 +23,12 @@ Lightweight and self-hosted Server management tool. It is designed to be simple 
 - Node.js 20+
 
 ## Installation
+
+### Docker
+***Soon***
+
+
+### Manual Installation
 **Clone the repository**
 ```bash
 git clone https://github.com/ximmanuel/Coconut.git
