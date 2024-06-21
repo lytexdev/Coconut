@@ -1,0 +1,8 @@
+{
+    "modules": [
+      { "enum": "SYSTEM", "component": "System", "text": "System" },
+      { "enum": "DOCKER", "component": "DockerContainers", "text": "Docker" },
+      { "enum": "BACKUP", "component": "Backup", "text": "Backup" }
+    ]
+  }
+  

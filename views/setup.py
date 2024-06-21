@@ -51,7 +51,7 @@ def set_modules():
 
 @setup_bp.route("/modules", methods=["GET"])
 def get_modules():
-    enabled_modules = Module.query.all()
+    enabled_modules = Module.query.filter_by(enabled=True).order_by(Module.order).all()
     modules_list = [
         {"name": module.name.name, "order": module.order} for module in enabled_modules
     ]

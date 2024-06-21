@@ -1,25 +1,20 @@
 <template>
     <div class="module-selection">
-        <div v-for="module in modules" :key="module.value" class="module-option">
+        <div v-for="module in modules" :key="module.enum" class="module-option">
             <label>
-                <input type="checkbox" v-model="selectedModules" :value="module.value" />
+                <input type="checkbox" v-model="selectedModules" :value="module.enum" />
                 {{ module.text }}
             </label>
-            <input type="number" v-model="moduleOrder[module.value]" min="1"
-                v-if="selectedModules.includes(module.value)" placeholder="Order" />
+            <input type="number" v-model="moduleOrder[module.enum]" min="1" v-if="selectedModules.includes(module.enum)"
+                placeholder="Order" />
         </div>
-
         <button @click="saveModules" class="btn">Save Modules</button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-
-interface Module {
-    value: string;
-    text: string;
-}
+import modulesConfig from '@/modules'
 
 interface ModuleOrder {
     [key: string]: number;
@@ -30,11 +25,7 @@ interface FetchModule {
     order: number;
 }
 
-const modules: Module[] = [
-    { value: 'SYSTEM', text: 'System' },
-    { value: 'BACKUP', text: 'Backup' },
-    { value: 'DOCKER', text: 'Docker' }
-]
+const modules = modulesConfig
 
 const selectedModules = ref<string[]>([])
 const moduleOrder = ref<ModuleOrder>({})
