@@ -1,5 +1,9 @@
-# Features Ideas
+## Todo
+- Tutorial for setting up Coconut
+- YouTube Video for setting up Coconut
+- Dockerize Coconut
 
+## Features Ideas
 - File Upload Module
 - Extension Support
 - Logging
