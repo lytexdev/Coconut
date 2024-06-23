@@ -87,7 +87,7 @@ python build.py
 
 
 ## Feature Ideas
-Some interesting features that could be added to: [TODO](Todo.md)
+Some interesting features that could be added to: [TODO](TODO.md)
 
 
 ## License
