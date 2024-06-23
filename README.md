@@ -8,6 +8,7 @@ Lightweight and self-hosted Server management tool. It is designed to be simple 
 
 ## Features
 - User Authentication
+- Develope own modules
 - Read System Information
 - Manage Docker Containers
 - Create Backup
@@ -18,11 +19,8 @@ Lightweight and self-hosted Server management tool. It is designed to be simple 
 - **Backend**: Flask
 - **Frontend**: Vue.js, SCSS
 
-## Requirements
-- Python 3.8+
-- Node.js 20+
 
-## Installation
+## Getting Started
 
 ### Docker
 ***Soon***
@@ -86,6 +84,10 @@ npm install
 ```bash
 python build.py
 ```
+
+
+## Feature Ideas
+Some interesting features that could be added to: [TODO](Todo.md)
 
 
 ## License
