@@ -1,0 +1,14 @@
+@import './setup/module-selection';
+
+.setup-header {
+    display: flex;
+    flex-direction: column;
+
+    .logo-img {
+        transition: transform 0.3s;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}

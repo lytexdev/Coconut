@@ -3,7 +3,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from config import Config
 from flask_migrate import Migrate
-from models import db, User
+from models import db, User, Setup
 
 app = Flask(__name__, static_folder="static", static_url_path="", template_folder="templates")
 app.config.from_object(Config)
@@ -29,10 +29,11 @@ app.register_blueprint(docker_bp, url_prefix="/api")
 
 @app.before_request
 def check_for_setup():
-    if not User.query.first() and request.endpoint not in ["setup.create_user", "setup.get_setup_status", "setup.setup_index",]:
-        if request.endpoint and not request.endpoint.startswith("static"):
-            return redirect(url_for("setup.setup_index"))
-
+    setup_record = Setup.query.first()
+    if not User.query.first() or (setup_record and not setup_record.completed):
+        if request.endpoint not in ["setup.create_user", "setup.set_modules", "setup.get_setup_status", "setup.finish_setup", "setup.setup_index"]:
+            if request.endpoint and not request.endpoint.startswith("static"):
+                return redirect(url_for("setup.setup_index"))
 
 @app.route("/")
 def index():

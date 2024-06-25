@@ -9,35 +9,48 @@ load_dotenv()
 backup_bp = Blueprint("backup_api", __name__)
 
 
-def run_backup(source_path, destination_path, max_backups):
-    subprocess.run(
-        ["./static/scripts/backup.sh", source_path, destination_path, max_backups],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
+def run_backup(source_path, destination_path, max_backups, result):
+    try:
+        subprocess.run(
+            [
+                "./static/scripts/backup.sh",
+                source_path,
+                destination_path,
+                str(max_backups),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
 
-    backup_files = sorted(os.listdir(destination_path))
+        backup_files = sorted(os.listdir(destination_path))
 
-    if len(backup_files) > int(max_backups):
-        return backup_files[0]
+        if len(backup_files) > max_backups:
+            result["oldest_backup"] = backup_files[0]
 
-    return None
+    except subprocess.CalledProcessError as e:
+        print(f"Error during backup: {e}")
+        result["error"] = str(e)
 
 
 @backup_bp.route("/create_backup", methods=["POST"])
 def create_backup():
     source_path = os.getenv("BACKUP_SOURCE_PATH")
     destination_path = os.getenv("BACKUP_DESTINATION_PATH")
-    max_backups = os.getenv("BACKUP_DELETE_ALERT", "5")
+    max_backups = int(os.getenv("BACKUP_DELETE_ALERT", "5"))
 
-    def backup_thread():
-        run_backup(source_path, destination_path, max_backups)
-    
-    thread = threading.Thread(target=backup_thread)
+    result = {}
+    thread = threading.Thread(
+        target=run_backup, args=(source_path, destination_path, max_backups, result)
+    )
     thread.start()
+    thread.join()
 
-    return jsonify({"message": "Backup started", "oldest_backup": None})
+    if "error" in result:
+        return jsonify({"message": "Backup failed", "error": result["error"]}), 500
+
+    oldest_backup = result.get("oldest_backup", None)
+    return jsonify({"message": "Backup created", "oldest_backup": oldest_backup})
 
 
 @backup_bp.route("/backup_count", methods=["GET"])
@@ -76,4 +89,7 @@ def delete_backup():
         os.remove(os.path.join(destination_path, backup_to_delete))
         return jsonify({"message": f"{backup_to_delete} deleted successfully"})
     except Exception as e:
-        return (jsonify({"message": f"Error deleting {backup_to_delete}", "error": str(e)}),500)
+        return (
+            jsonify({"message": f"Error deleting {backup_to_delete}", "error": str(e)}),
+            500,
+        )

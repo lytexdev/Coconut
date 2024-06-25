@@ -6,5 +6,5 @@ Base SCSS file to import all other SCSS files and compile them into a single CSS
 @import './styles/animations';
 @import './styles/header';
 @import './styles/dashboard';
-@import './styles/module';
-
+@import './styles/modules';
+@import './styles/setup';

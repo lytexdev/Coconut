@@ -1,3 +1,6 @@
+@import './modules/system-info';
+@import './modules/backup';
+
 .panel-module {
     display: flex;
     flex-direction: column;
@@ -19,15 +22,12 @@
         margin: 0.5rem 0;
     }
 
-    ul {
-        padding-left: 20px;
-    }
-
     ul li {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 0.5rem;
+        color: $secondary-text-color;
 
         button {
             background-color: $primary-color;
@@ -78,33 +78,5 @@
 
     &.offline {
         background-color: $danger-color;
-    }
-}
-
-/** MODULES **/
-
-.system-info {
-	flex-direction: row;
-}
-
-.backup-management {
-    display: flex;
-    justify-content: space-between;
-}
-
-.backup-list {
-    list-style-type: none;
-    padding: 0;
-
-    li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid #444;
-    }
-
-    .btn {
-        margin-left: 10px;
     }
 }
