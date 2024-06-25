@@ -1,7 +1,7 @@
 # Coconut
 
 ## Overview
-Lightweight and self-hosted Server management tool. It is designed to be simple and easy to use. It is built with Flask and Vue.js.
+A simple Dashboard to manage your server. It is built with Flask and Vue.js.
 
 ## Preview
 ![Preview](./preview.png)
@@ -22,11 +22,6 @@ Lightweight and self-hosted Server management tool. It is designed to be simple 
 
 ## Getting Started
 
-### Docker
-***Soon***
-
-
-### Manual Installation
 **Clone the repository**
 ```bash
 git clone https://github.com/ximmanuel/Coconut.git
@@ -43,11 +38,6 @@ python -m venv .venv
 Linux
 ```bash
 source .venv/bin/activate
-```
-
-Fish
-```bash
-source .venv/bin/activate.fish
 ```
 
 **Install dependencies**
@@ -87,7 +77,7 @@ python build.py
 
 
 ## Feature Ideas
-Some interesting features that could be added to: [TODO](TODO.md)
+Some interesting features that could be added to - see [TODO](TODO.md) file for details.
 
 
 ## License
