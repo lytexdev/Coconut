@@ -1,11 +1,11 @@
 ## Todo
 - Finish Setup
-- Dockerize Coconut
 - Tutorial for setting up Coconut
 - YouTube Video for setting up Coconut
 
 ## Features Ideas
 - File Upload Module
+    - Password
 - Extension Support
 - Logging
 - Discord Integration
@@ -17,4 +17,5 @@ Advanced Backup and Restore:
     - Incremental and differential backups
     - Granular restore options for files, databases, and applications
     - Integration with third-party backup solutions
+    - Cloud support
 - Lightmode (I don't like it so It's the lowest priority ig)
