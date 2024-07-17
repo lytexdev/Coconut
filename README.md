@@ -1,7 +1,7 @@
 # Coconut
 
 ## Overview
-A simple Dashboard to manage your server. It is built with Flask and Vue.js.
+Coconut is a selfhosted and simple Dashboard to manage your server. It's built with Flask and Vue.js.
 
 ## Preview
 ![Preview](./preview.png)
@@ -19,6 +19,10 @@ A simple Dashboard to manage your server. It is built with Flask and Vue.js.
 - **Backend**: Flask
 - **Frontend**: Vue.js, SCSS
 
+## Requirements
+- Unix-based OS (Linux, macOS, etc. - Windows is not supported)
+- Python 3.6+
+- Node.js & npm
 
 ## Getting Started
 
