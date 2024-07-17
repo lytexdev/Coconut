@@ -5,9 +5,17 @@ from models.setup import Setup
 from models.module import Module, ModuleEnum
 import logging
 import bcrypt
+import docker
 
 setup_bp = Blueprint("setup", __name__)
 
+def check_docker():
+    try:
+        client = docker.from_env()
+        client.ping()
+        return True
+    except Exception:
+        return False
 
 @setup_bp.route("/", methods=["POST"])
 def create_user():
@@ -63,6 +71,14 @@ def get_modules():
     ]
     logging.info("Modules configuration retrieved successfully.")
     return jsonify(modules=modules_list)
+
+
+@setup_bp.route("/available_modules", methods=["GET"])
+def available_modules():
+    available_modules = [{"enum": module.name, "text": module.value} for module in ModuleEnum]
+    if not check_docker():
+        available_modules = [m for m in available_modules if m["enum"] != "DOCKER"]
+    return jsonify(modules=available_modules)
 
 
 @setup_bp.route("/status", methods=["GET"])

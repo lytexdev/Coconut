@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import modulesConfig from '@/modules'
 
 interface ModuleOrder {
     [key: string]: number;
@@ -25,10 +24,9 @@ interface FetchModule {
     order: number;
 }
 
-const modules = modulesConfig
-
 const selectedModules = ref<string[]>([])
 const moduleOrder = ref<ModuleOrder>({})
+const modules = ref<any[]>([])
 
 const saveModules = () => {
     const payload = selectedModules.value.map(module => ({
@@ -56,6 +54,16 @@ const saveModules = () => {
         })
 }
 
+const fetchAvailableModules = async () => {
+    try {
+        const response = await fetch('/setup/available_modules')
+        const data = await response.json()
+        modules.value = data.modules
+    } catch (error) {
+        console.error('Error fetching available modules:', error)
+    }
+}
+
 onMounted(() => {
     fetch('/setup/modules')
         .then(response => response.json())
@@ -66,5 +74,7 @@ onMounted(() => {
                 return acc
             }, {})
         })
+    
+    fetchAvailableModules()
 })
 </script>

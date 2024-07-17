@@ -22,6 +22,7 @@
         </div>
         <ModuleSelection />
         <div class="separator"></div>
+        <button @click="previousStep" class="btn">Back</button>
         <button @click="nextStep" class="btn btn-success">Next</button>
     </div>
 
@@ -32,12 +33,13 @@
             <p>Setup is complete! You can now finish the setup and start using Coconut.</p>
         </div>
         <div class="separator"></div>
+        <button @click="previousStep" class="btn">Back</button>
         <button @click="finishSetup" class="btn btn-success" title="Click to finish the setup">Finish Setup</button>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import CreateUser from './CreateUser.vue';
 import ModuleSelection from './ModuleSelection.vue';
@@ -45,9 +47,14 @@ import Logo from '../Logo.vue';
 
 const router = useRouter();
 const setup = ref<number>(1);
+const modules = ref<string[]>([]);
 
 const nextStep = () => {
     setup.value += 1;
+}
+
+const previousStep = () => {
+    setup.value -= 1;
 }
 
 const finishSetup = async () => {
@@ -60,7 +67,7 @@ const finishSetup = async () => {
         });
         const data = await response.json();
         if (data.success) {
-            router.push('/');
+            router.push('/login');
         } else {
             alert('Error finishing setup');
         }
@@ -68,4 +75,16 @@ const finishSetup = async () => {
         console.error('Error:', error);
     }
 }
+
+const fetchEnabledModules = async () => {
+    try {
+        const response = await fetch('/setup/modules')
+        const data = await response.json()
+        modules.value = data.modules.map((m: any) => m.name)
+    } catch (error) {
+        console.error('Error fetching enabled modules:', error)
+    }
+}
+
+onMounted(fetchEnabledModules)
 </script>
