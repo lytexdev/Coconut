@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session
 import os
 import psutil
 from config import Config
+import logging
 
 system_info_bp = Blueprint("api", __name__)
 
@@ -26,6 +27,7 @@ def system_info():
 def shutdown():
     if not session.get("logged_in"):
         return jsonify(success=False, message="Unauthorized"), 401
+    logging.info("Shutdown initiated.")
     os.system(Config.SHUTDOWN_COMMAND)
     return jsonify(success=True, message="Shutdown initiated")
 
@@ -34,5 +36,6 @@ def shutdown():
 def reboot():
     if not session.get("logged_in"):
         return jsonify(success=False, message="Unauthorized"), 401
+    logging.info("Reboot initiated.")
     os.system(Config.REBOOT_COMMAND)
     return jsonify(success=True, message="Reboot initiated")

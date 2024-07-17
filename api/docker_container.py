@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 import docker
+import logging
 
 docker_bp = Blueprint("docker_api", __name__)
 client = docker.from_env()
@@ -26,6 +27,7 @@ def docker_start():
     container_id = data.get("id")
     container = client.containers.get(container_id)
     container.start()
+    logging.info(f"Container {container_id} started.")
     return jsonify({"status": "started"})
 
 
@@ -35,6 +37,7 @@ def docker_stop():
     container_id = data.get("id")
     container = client.containers.get(container_id)
     container.stop()
+    logging.info(f"Container {container_id} stopped.")
     return jsonify({"status": "stopped"})
 
 
@@ -44,4 +47,5 @@ def docker_remove():
     container_id = data.get("id")
     container = client.containers.get(container_id)
     container.remove()
+    logging.info(f"Container {container_id} removed.")
     return jsonify({"status": "removed"})
