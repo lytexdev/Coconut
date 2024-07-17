@@ -28,51 +28,28 @@ git clone https://github.com/ximmanuel/Coconut.git
 cd Coconut
 ```
 
-**Create a virtual environment**
+**Install Coconut**
 ```bash
-python -m venv .venv
+chmod +x install.sh
+./install.sh
 ```
 
-**Activate the virtual environment**
-
-Linux
+**Activate venv**
 ```bash
 source .venv/bin/activate
 ```
 
-**Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-**Copy .env.example to .env and edit it**
-```bash
-cp .env.example .env
-```
-
-**Initialize the database**
-```bash
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
-```
-
 **Run the server**
 ```bash
-python app.py
+python3 app.py
 ```
 
 ## Development
 
-**Install frontend dependencies**
-```bash
-cd coconut-shell/
-npm install
-```
-
 **Build frontend**
 ```bash
-python build.py
+chmod +x build.sh
+./build.sh
 ```
 
 
