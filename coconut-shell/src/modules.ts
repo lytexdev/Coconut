@@ -1,3 +1,4 @@
+// * This file is used to import all the modules
 import modulesConfig from './modules.json';
 
 interface ModuleConfig {

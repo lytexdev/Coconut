@@ -1,6 +1,6 @@
 <template>
     <div class="module-selection">
-        <div v-for="module in modules" :key="module.enum" class="module-option">
+        <div v-for="module in availableModules" :key="module.enum" class="module-option">
             <label>
                 <input type="checkbox" v-model="selectedModules" :value="module.enum" />
                 {{ module.text }}
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 
 interface ModuleOrder {
     [key: string]: number;
@@ -24,15 +24,21 @@ interface FetchModule {
     order: number;
 }
 
-const selectedModules = ref<string[]>([])
-const moduleOrder = ref<ModuleOrder>({})
-const modules = ref<any[]>([])
+interface Module {
+    enum: string;
+    component: string;
+    text: string;
+}
+
+const availableModules = ref<Module[]>([]);
+const selectedModules = ref<string[]>([]);
+const moduleOrder = ref<ModuleOrder>({});
 
 const saveModules = () => {
     const payload = selectedModules.value.map(module => ({
         name: module,
         order: moduleOrder.value[module] || 0
-    }))
+    }));
 
     fetch('/setup/modules', {
         method: 'POST',
@@ -44,37 +50,45 @@ const saveModules = () => {
         .then((response) => response.json())
         .then((data) => {
             if (data.success) {
-                alert('Modules saved successfully!')
+                alert('Modules saved successfully!');
             } else {
-                alert('Error saving modules')
+                alert('Error saving modules');
             }
         })
         .catch((error) => {
-            console.error('Error:', error)
-        })
-}
-
-const fetchAvailableModules = async () => {
-    try {
-        const response = await fetch('/setup/available_modules')
-        const data = await response.json()
-        modules.value = data.modules
-    } catch (error) {
-        console.error('Error fetching available modules:', error)
-    }
-}
+            console.error('Error:', error);
+        });
+};
 
 onMounted(() => {
     fetch('/setup/modules')
         .then(response => response.json())
         .then(data => {
-            selectedModules.value = data.modules.map((m: FetchModule) => m.name)
+            selectedModules.value = data.modules.map((m: FetchModule) => m.name);
             moduleOrder.value = data.modules.reduce((acc: ModuleOrder, m: FetchModule) => {
-                acc[m.name] = m.order
-                return acc
-            }, {})
+                acc[m.name] = m.order;
+                return acc;
+            }, {});
         })
-    
-    fetchAvailableModules()
-})
+        .catch(error => {
+            console.error('Error fetching enabled modules:', error);
+        });
+
+    fetch('/setup/available-modules')
+        .then(response => response.json())
+        .then(data => {
+            availableModules.value = data.modules;
+        })
+        .catch(error => {
+            console.error('Error fetching available modules:', error);
+        });
+});
 </script>
+
+<style scoped>
+.module-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+</style>

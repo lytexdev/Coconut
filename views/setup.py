@@ -6,6 +6,8 @@ from models.module import Module, ModuleEnum
 import logging
 import bcrypt
 import docker
+import os
+import json
 
 setup_bp = Blueprint("setup", __name__)
 
@@ -73,11 +75,32 @@ def get_modules():
     return jsonify(modules=modules_list)
 
 
-@setup_bp.route("/available_modules", methods=["GET"])
-def available_modules():
-    available_modules = [{"enum": module.name, "text": module.value} for module in ModuleEnum]
-    if not check_docker():
-        available_modules = [m for m in available_modules if m["enum"] != "DOCKER"]
+@setup_bp.route("/available-modules", methods=["GET"])
+def get_available_modules():
+    try:
+        json_path = os.path.join(os.getcwd(), 'coconut-shell', 'src', 'modules.json')
+        logging.info(f"Loading modules from: {json_path}")
+        
+        if not os.path.exists(json_path):
+            logging.error(f"modules.json file not found at: {json_path}")
+            return jsonify(modules=[]), 404
+
+        with open(json_path) as f:
+            modules_data = json.load(f)
+            logging.info(f"Loaded modules: {modules_data}")
+
+        docker_client = docker.from_env()
+        docker_client.ping()
+        docker_available = True
+    except Exception as e:
+        docker_available = False
+
+    available_modules = [
+        module for module in modules_data["modules"]
+        if module["enum"] != "DOCKER" or docker_available
+    ]
+
+    logging.info("Available modules retrieved successfully.")
     return jsonify(modules=available_modules)
 
 
