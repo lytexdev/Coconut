@@ -11,6 +11,7 @@ import json
 
 setup_bp = Blueprint("setup", __name__)
 
+
 def check_docker():
     try:
         client = docker.from_env()
@@ -18,6 +19,7 @@ def check_docker():
         return True
     except Exception:
         return False
+
 
 @setup_bp.route("/", methods=["POST"])
 def create_user():

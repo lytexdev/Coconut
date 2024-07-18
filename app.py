@@ -19,7 +19,7 @@ app.config.from_object(Config)
 rate_limiter = Limiter(get_remote_address, app=app, default_limits=[Config.RATE_LIMIT])
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-                    handlers=[logging.FileHandler("coconut.log"), logging.StreamHandler()])
+                    handlers=[logging.FileHandler("logs/coconut.log"), logging.StreamHandler()])
 
 
 # ----------------- Database ----------------- #

@@ -21,21 +21,3 @@ def system_info():
         ram_usage=ram_usage,
         disk_used=f"{disk_used}GB/{disk_total}GB ({disk_usage_percent}%)",
     )
-
-
-@system_info_bp.route("/api/shutdown", methods=["POST"])
-def shutdown():
-    if not session.get("logged_in"):
-        return jsonify(success=False, message="Unauthorized"), 401
-    logging.info("Shutdown initiated.")
-    os.system(Config.SHUTDOWN_COMMAND)
-    return jsonify(success=True, message="Shutdown initiated")
-
-
-@system_info_bp.route("/api/reboot", methods=["POST"])
-def reboot():
-    if not session.get("logged_in"):
-        return jsonify(success=False, message="Unauthorized"), 401
-    logging.info("Reboot initiated.")
-    os.system(Config.REBOOT_COMMAND)
-    return jsonify(success=True, message="Reboot initiated")
