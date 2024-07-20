@@ -43,11 +43,18 @@ setup_python_env() {
     deactivate
 }
 
-# Copy and rename .env.example to .env
+# Generate a random Flask SECRET_KEY
+generate_secret_key() {
+    python3 -c "import os; print(os.urandom(24).hex())"
+}
+
+# Copy and rename .env.example to .env and set a random SECRET_KEY
 copy_and_edit_env() {
     if [ ! -f ".env" ]; then
         cp .env.example .env
-        echo ".env file created from .env.example. Please edit the .env file as needed."
+        SECRET_KEY=$(generate_secret_key)
+        sed -i "s/^SECRET_KEY=.*/SECRET_KEY=\"$SECRET_KEY\"/" .env
+        echo ".env file created from .env.example with a random SECRET_KEY."
     else
         echo ".env file already exists."
     fi
