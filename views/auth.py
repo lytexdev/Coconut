@@ -1,13 +1,4 @@
-from flask import (
-    Blueprint,
-    render_template,
-    redirect,
-    url_for,
-    request,
-    session,
-    flash,
-    jsonify,
-)
+from flask import Blueprint, render_template, redirect, url_for, request, session, jsonify
 from models import db
 from models.user import User
 import logging

@@ -2,6 +2,10 @@
 
 ## Overview
 Coconut is a selfhosted and simple Dashboard to manage your server. It's built with Flask and Vue.js.
+**It's still in development and not ready for production.**
+
+## Setup Guide
+[lytexmedia.com/coconut](https://lytexmedia.com/coconut)
 
 ## Preview
 ![Preview](./preview.png)
@@ -54,6 +58,13 @@ python3 app.py
 ```bash
 chmod +x build.sh
 ./build.sh
+```
+
+**Initialize the database**
+```bash
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
 ```
 
 

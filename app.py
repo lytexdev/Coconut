@@ -49,7 +49,7 @@ except (ImportError, docker.errors.DockerException) as e:
 @app.before_request
 def check_for_setup():
     setup_record = Setup.query.first()
-    if not User.query.first() or (setup_record and not setup_record.completed):
+    if not setup_record or not setup_record.completed:
         allowed_endpoints = [
             "setup.create_user",
             "setup.set_modules",
@@ -61,6 +61,9 @@ def check_for_setup():
         if request.endpoint not in allowed_endpoints:
             if request.endpoint and not request.endpoint.startswith("static"):
                 return redirect(url_for("setup.setup_index"))
+    else:
+        if request.endpoint in ["setup.create_user", "setup.set_modules", "setup.get_setup_status", "setup.finish_setup", "setup.setup_index"]:
+            return redirect(url_for("auth.login"))
 
 
 # ----------------- Index Route ----------------- #
