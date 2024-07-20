@@ -2,6 +2,7 @@ Flask
 flask-limiter
 flask-sqlalchemy
 flask-migrate
+Flask-JWT-Extended
 python-dotenv
 bcrypt
 psutil
