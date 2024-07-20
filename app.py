@@ -5,6 +5,7 @@ from config import Config
 import logging
 from flask_migrate import Migrate
 
+from middleware import check_for_setup
 from models import db, User, Setup
 from views.auth import auth_bp
 from views.main import main_bp
@@ -35,7 +36,7 @@ app.register_blueprint(system_info_bp, url_prefix="/api")
 app.register_blueprint(backup_bp, url_prefix="/api")
 
 
-# ----------------- Check Docker Integration ----------------- #
+# ----------------- Docker Integration ----------------- #
 try:
     import docker
     client = docker.from_env()
@@ -45,25 +46,9 @@ except (ImportError, docker.errors.DockerException) as e:
     logging.warning("Docker is not available. Skipping Docker Integration.")
 
 
-# ----------------- Setup Check ----------------- #
-@app.before_request
-def check_for_setup():
-    setup_record = Setup.query.first()
-    if not setup_record or not setup_record.completed:
-        allowed_endpoints = [
-            "setup.create_user",
-            "setup.set_modules",
-            "setup.get_setup_status",
-            "setup.finish_setup",
-            "setup.setup_index",
-            "setup.get_available_modules"
-        ]
-        if request.endpoint not in allowed_endpoints:
-            if request.endpoint and not request.endpoint.startswith("static"):
-                return redirect(url_for("setup.setup_index"))
-    else:
-        if request.endpoint in ["setup.create_user", "setup.set_modules", "setup.get_setup_status", "setup.finish_setup", "setup.setup_index"]:
-            return redirect(url_for("auth.login"))
+# ----------------- Middleware ----------------- #
+app.before_request(check_for_setup)
+
 
 
 # ----------------- Index Route ----------------- #
@@ -73,4 +58,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=Config.PORT, debug=Config.DEBUG)
+    app.run(host=Config.HOST, port=Config.PORT, debug=Config.DEBUG)

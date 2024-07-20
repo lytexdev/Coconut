@@ -1,7 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, session, jsonify
-import os
-import psutil
-from config import Config
+from flask import Blueprint, render_template, redirect, url_for, session
 
 main_bp = Blueprint("main", __name__)
 
