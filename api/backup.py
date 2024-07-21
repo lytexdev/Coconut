@@ -10,6 +10,7 @@ load_dotenv()
 
 backup_bp = Blueprint("backup_api", __name__)
 
+# TODO: change .env values to database values
 
 def run_backup(source_path, destination_path, max_backups, result):
     try:

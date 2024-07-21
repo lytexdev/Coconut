@@ -1,11 +1,12 @@
 from flask import Flask, redirect, request, url_for, render_template
 from flask_limiter import Limiter
+from flask_cors import CORS
 from flask_limiter.util import get_remote_address
 from config import Config
 import logging
 from flask_migrate import Migrate
 
-from middleware import check_for_setup
+from middleware import check_for_setup, require_login
 from models import db, User, Setup
 from views.auth import auth_bp
 from views.main import main_bp
@@ -21,6 +22,15 @@ rate_limiter = Limiter(get_remote_address, app=app, default_limits=[Config.RATE_
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
                     handlers=[logging.FileHandler("logs/coconut.log"), logging.StreamHandler()])
+
+
+# ----------------- CORS ----------------- #
+allowed_origins = Config.ALLOWED_ORIGINS
+if allowed_origins == "*":
+    CORS(app, resources={r"/*": {"origins": "*"}})
+else:
+    allowed_origins_list = allowed_origins.split(",")
+    CORS(app, resources={r"/*": {"origins": allowed_origins_list}})
 
 
 # ----------------- Database ----------------- #
@@ -48,7 +58,7 @@ except (ImportError, docker.errors.DockerException) as e:
 
 # ----------------- Middleware ----------------- #
 app.before_request(check_for_setup)
-
+app.before_request(require_login)
 
 
 # ----------------- Index Route ----------------- #

@@ -15,7 +15,8 @@
 - Automation and Scripting:
     - Support for scripts and automation tasks (e.g., Bash, Python)
     - Scheduled tasks and Cron job management
-- IP-Address Blocking:
+- IP-Address Blocking
+    - Block IP addresses and ranges
     - Whitelist and blacklist management
 - Discord Integration
 - Network Management
