@@ -1,3 +1,10 @@
+# Coconut
+static/assets/images/*
+!static/assets/images/.gitkeep
+static/assets/*.js
+static/assets/*.css
+static/assets/*.ttf
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -55,7 +62,9 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Flask stuff:
+instance/
+.webassets-cache
 *.log
 local_settings.py
 db.sqlite3
@@ -64,10 +73,6 @@ db.sqlite3-journal
 *.sqlite3
 *.sqlite
 migrations/
-
-# Flask stuff:
-instance/
-.webassets-cache
 
 # Scrapy stuff:
 .scrapy
