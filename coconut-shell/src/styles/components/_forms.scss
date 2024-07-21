@@ -14,7 +14,7 @@
 		border: 1px solid #333;
 		border-radius: 5px;
 		background-color: #2c2c2c;
-		color: #fff;
+		color: $text-color;
 	}
 }
 
@@ -25,7 +25,7 @@ select {
     border: 1px solid #333;
     border-radius: 5px;
     background-color: #292929;
-    color: #fff;
+    color: $text-color;
 }
 
 label {
@@ -45,5 +45,5 @@ input[type="number"] {
 	border: 1px solid #333;
 	border-radius: 5px;
 	background-color: #292929;
-	color: #fff;
+	color: $text-color;
 }

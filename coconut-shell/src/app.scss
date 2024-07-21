@@ -1,6 +1,7 @@
 /*
 Base SCSS file to import all other SCSS files and compile them into a single CSS file.
 */
+
 @import './styles/variables';
 @import './styles/components';
 @import './styles/animations';
