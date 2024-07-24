@@ -16,7 +16,7 @@ ModuleEnum = Enum(
 class Module(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = db.Column(db.Enum(ModuleEnum), nullable=False)
-    enabled = db.Column(db.Boolean, default=False)
+    enabled = db.Column(db.Boolean, default=True)
     order = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):

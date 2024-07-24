@@ -2,7 +2,7 @@
     "modules": [
       { "enum": "SYSTEM", "component": "System", "text": "System" },
       { "enum": "BACKUP", "component": "Backup", "text": "Backup" },
-      { "enum": "DOCKER", "component": "DockerContainers", "text": "Docker" }
+      { "enum": "DOCKER", "component": "Docker", "text": "Docker" }
     ]
   }
   
