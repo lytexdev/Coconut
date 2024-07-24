@@ -1,23 +1,14 @@
 # Coconut
 
 ## Overview
-Coconut is a selfhosted and simple Dashboard to manage your server. It's built with Flask and Vue.js.
+[Coconut](https://lytexmedia.com/coconut) is a selfhosted and simple Dashboard to manage your server. It's built with Flask and Vue.js.
 **It's still in development and not ready for production.**
 
-## Setup Guide
+## Documentation
 [lytexmedia.com/coconut](https://lytexmedia.com/coconut)
 
 ## Preview
 ![Preview](./preview.png)
-
-## Features
-- User Authentication
-- Develope own modules
-- Read System Information
-- Manage Docker Containers
-- Create Backup
-- Shutdown
-- Reboot
 
 ## Technologies
 - **Backend**: Flask
