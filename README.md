@@ -1,24 +1,23 @@
 # Coconut
 
 ## Overview
-A simple Dashboard to manage your server. It is built with Flask and Vue.js.
+[Coconut](https://lytexmedia.com/coconut) is a selfhosted and simple Dashboard to manage your server. It's built with Flask and Vue.js.
+**It's still in development and not ready for production.**
+
+## Documentation
+[lytexmedia.com/coconut](https://lytexmedia.com/coconut)
 
 ## Preview
 ![Preview](./preview.png)
-
-## Features
-- User Authentication
-- Develope own modules
-- Read System Information
-- Manage Docker Containers
-- Create Backup
-- Shutdown
-- Reboot
 
 ## Technologies
 - **Backend**: Flask
 - **Frontend**: Vue.js, SCSS
 
+## Requirements
+- Unix-based OS (Linux, macOS, etc. - Windows is not supported)
+- Python 3.6+
+- Node.js & npm
 
 ## Getting Started
 
@@ -28,26 +27,28 @@ git clone https://github.com/ximmanuel/Coconut.git
 cd Coconut
 ```
 
-**Create a virtual environment**
+**Install Coconut**
 ```bash
-python -m venv .venv
+chmod +x install.sh
+./install.sh
 ```
 
-**Activate the virtual environment**
-
-Linux
+**Activate venv**
 ```bash
 source .venv/bin/activate
 ```
 
-**Install dependencies**
+**Run the server**
 ```bash
-pip install -r requirements.txt
+python3 app.py
 ```
 
-**Copy .env.example to .env and edit it**
+## Development
+
+**Build frontend**
 ```bash
-cp .env.example .env
+chmod +x build.sh
+./build.sh
 ```
 
 **Initialize the database**
@@ -55,24 +56,6 @@ cp .env.example .env
 flask db init
 flask db migrate -m "Initial migration"
 flask db upgrade
-```
-
-**Run the server**
-```bash
-python app.py
-```
-
-## Development
-
-**Install frontend dependencies**
-```bash
-cd coconut-shell/
-npm install
-```
-
-**Build frontend**
-```bash
-python build.py
 ```
 
 

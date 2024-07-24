@@ -10,3 +10,8 @@ Font SCSS file to import the font and apply it
 * {
     font-family: 'Recursive', sans-serif, Arial;
 }
+
+h1 {
+	margin-bottom: 2.5rem;
+	color: $primary-color;
+}

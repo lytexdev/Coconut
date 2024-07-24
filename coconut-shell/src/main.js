@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 import Dashboard from "./components/Dashboard.vue";
 import Login from "./components/Login.vue";
-import Setup from "./components/setup/Setup.vue";
+import Setup from "./components/Setup.vue";
 
 const app = createApp(App);
 

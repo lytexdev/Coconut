@@ -1,15 +1,7 @@
-from flask import (
-    Blueprint,
-    render_template,
-    redirect,
-    url_for,
-    request,
-    session,
-    flash,
-    jsonify,
-)
+from flask import Blueprint, render_template, redirect, url_for, request, session, jsonify
 from models import db
 from models.user import User
+import logging
 import bcrypt
 
 auth_bp = Blueprint("auth", __name__)
@@ -29,11 +21,11 @@ def login():
             session["logged_in"] = True
             session["user_id"] = str(user.id)
             session["role"] = user.role.value
+            logging.info(f"User {username} logged in successfully.")
             return jsonify(success=True)
         else:
-            return jsonify(
-                success=False, message="Invalid credentials. Please try again."
-            )
+            logging.error(f"Login failed: Invalid credentials for user {username}.")
+            return jsonify(success=False, message="Invalid credentials. Please try again.")
     return render_template("index.html")
 
 
@@ -42,4 +34,5 @@ def logout():
     session.pop("logged_in", None)
     session.pop("user_id", None)
     session.pop("role", None)
+    logging.info("User logged out.")
     return redirect(url_for("auth.login"))
