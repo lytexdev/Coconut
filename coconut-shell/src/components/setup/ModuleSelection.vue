@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { getCsrfToken } from '@/csrf'; // Import the CSRF token function
 
 interface ModuleOrder {
     [key: string]: number;
@@ -33,31 +34,34 @@ interface Module {
 const availableModules = ref<Module[]>([]);
 const selectedModules = ref<string[]>([]);
 const moduleOrder = ref<ModuleOrder>({});
+const csrfToken = ref<string>('');
 
-const saveModules = () => {
-    const payload = selectedModules.value.map(module => ({
-        name: module,
-        order: moduleOrder.value[module] || 0
-    }));
+const saveModules = async () => {
+    try {
+        const token = await getCsrfToken();
 
-    fetch('/setup/modules', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ modules: payload }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.success) {
-                alert('Modules saved successfully!');
-            } else {
-                alert('Error saving modules');
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+        const payload = selectedModules.value.map(module => ({
+            name: module,
+            order: moduleOrder.value[module] || 0
+        }));
+
+        const response = await fetch('/setup/modules', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': token
+            },
+            body: JSON.stringify({ modules: payload }),
         });
+        const data = await response.json();
+        if (data.success) {
+            alert('Modules saved successfully!');
+        } else {
+            alert('Error saving modules');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 };
 
 onMounted(() => {
@@ -84,11 +88,3 @@ onMounted(() => {
         });
 });
 </script>
-
-<style scoped>
-.module-selection {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-</style>

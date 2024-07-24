@@ -1,6 +1,7 @@
-from flask import Flask, redirect, request, url_for, render_template
+from flask import Flask, redirect, request, url_for, render_template, jsonify
 from flask_limiter import Limiter
 from flask_cors import CORS
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_limiter.util import get_remote_address
 from config import Config
 import logging
@@ -9,7 +10,6 @@ from flask_migrate import Migrate
 from middleware import check_ip_blacklist, check_ip_whitelist, check_for_setup, require_login
 from models import db, User, Setup
 from views.auth import auth_bp
-from views.main import main_bp
 from views.setup import setup_bp
 from api.system_info import system_info_bp
 from api.backup import backup_bp
@@ -22,6 +22,7 @@ rate_limiter = Limiter(get_remote_address, app=app, default_limits=[Config.RATE_
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
                     handlers=[logging.FileHandler("logs/coconut.log"), logging.StreamHandler()])
+csrf = CSRFProtect(app)
 
 
 # ----------------- CORS ----------------- #
@@ -40,7 +41,6 @@ migrate = Migrate(app, db)
 
 # ----------------- Blueprints ----------------- #
 app.register_blueprint(auth_bp)
-app.register_blueprint(main_bp)
 app.register_blueprint(setup_bp, url_prefix="/setup")
 app.register_blueprint(system_info_bp, url_prefix="/api")
 app.register_blueprint(backup_bp, url_prefix="/api")
@@ -61,6 +61,14 @@ app.before_request(check_ip_blacklist)
 app.before_request(check_ip_whitelist)
 app.before_request(check_for_setup)
 app.before_request(require_login)
+
+
+# ----------------- CSRF Token Route ----------------- #
+@app.route("/api/csrf-token", methods=["GET"])
+def csrf_token():
+    token = generate_csrf()
+    return jsonify(csrf_token=token)
+
 
 # ----------------- Index Route ----------------- #
 @app.route("/")

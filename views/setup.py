@@ -108,12 +108,13 @@ def get_available_modules():
 
 @setup_bp.route("/status", methods=["GET"])
 def get_setup_status():
-    if User.query.first():
+    setup_record = Setup.query.first()
+    if setup_record and setup_record.completed:
         logged_in = "logged_in" in session
-        logging.info("Setup status checked: users exist.")
+        logging.info("Setup status retrieved successfully.")
         return jsonify(no_users=False, logged_in=logged_in)
     else:
-        logging.info("Setup status checked: no users exist.")
+        logging.info("Setup status retrieved successfully.")
         return jsonify(no_users=True)
 
 

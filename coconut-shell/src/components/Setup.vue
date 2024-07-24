@@ -47,12 +47,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { getCsrfToken } from '@/csrf';
 import CreateUser from './setup/CreateUser.vue';
 import ModuleSelection from './setup/ModuleSelection.vue';
 import Logo from './Logo.vue';
 
 const router = useRouter();
 const setup = ref<number>(1);
+const csrfToken = ref<string>('');
 const modules = ref<string[]>([]);
 
 const nextStep = () => {
@@ -65,10 +67,13 @@ const previousStep = () => {
 
 const finishSetup = async () => {
     try {
+        const token = await getCsrfToken();
+
         const response = await fetch('/setup/finish', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': token
             }
         });
         const data = await response.json();

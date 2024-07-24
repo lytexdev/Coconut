@@ -17,15 +17,13 @@ def check_for_setup():
             "setup.get_setup_status",
             "setup.finish_setup",
             "setup.setup_index",
-            "setup.get_available_modules"
+            "setup.get_available_modules",
+            "csrf_token"
         ]
         
         if request.endpoint not in allowed_endpoints:
             if request.endpoint and not request.endpoint.startswith("static"):
                 return redirect(url_for("setup.setup_index"))
-    else:
-        if request.endpoint in ["setup.create_user", "setup.set_modules", "setup.get_setup_status", "setup.finish_setup", "setup.setup_index"]:
-            return redirect(url_for("auth.login"))
 
 
 def require_login():
@@ -44,7 +42,8 @@ def require_login():
             "setup.get_setup_status",
             "setup.finish_setup",
             "setup.setup_index",
-            "setup.get_available_modules"
+            "setup.get_available_modules",
+            "csrf_token"
         ]
         if "logged_in" not in session and request.endpoint not in allowed_endpoints:
             if request.endpoint and not request.endpoint.startswith("static"):
@@ -57,12 +56,11 @@ def check_ip_blacklist():
     If the IP is in the blacklist, access is denied.
     """
     ip_blacklist = Config.IP_BLACKLIST.split(",")
-
     client_ip = request.remote_addr
-    
+
     if client_ip in ip_blacklist:
         return jsonify({"message": "Access denied"}), 403
-    
+
 
 def check_ip_whitelist():
     """
