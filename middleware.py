@@ -75,3 +75,44 @@ def check_ip_whitelist():
 
         if client_ip not in ip_whitelist:
             return jsonify({"message": "Access denied"}), 403
+
+
+def content_security_policy(response):
+    """
+    Middleware function to add Content Security Policy headers to each response.
+    Adjusted to allow resources from the same origin.
+    """
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
+        "style-src 'self' 'unsafe-inline'; "
+        "img-src 'self' data:; "
+        "font-src 'self'; "
+        "connect-src 'self'; "
+        "frame-src 'self'; "
+        "media-src 'self'; "
+        "object-src 'none'; "
+        "child-src 'self'; "
+        "frame-ancestors 'self'; "
+        "form-action 'self'; "
+        "base-uri 'self';"
+    )
+    return response
+
+
+def x_content_type_options(response):
+    """
+    Middleware function to add X-Content-Type-Options headers to each response.
+    Prevents the browser from interpreting files as a different MIME type than what is specified.
+    """
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    return response
+
+
+def x_frame_options(response):
+    """
+    Middleware function to add X-Frame-Options headers to each response.
+    Prevents the application from being embedded in a frame, protecting against clickjacking attacks.
+    """
+    response.headers["X-Frame-Options"] = "DENY"
+    return response

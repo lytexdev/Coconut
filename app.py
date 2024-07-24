@@ -7,7 +7,7 @@ from config import Config
 import logging
 from flask_migrate import Migrate
 
-from middleware import check_ip_blacklist, check_ip_whitelist, check_for_setup, require_login
+from middleware import check_ip_blacklist, check_ip_whitelist, check_for_setup, content_security_policy, require_login, x_content_type_options, x_frame_options
 from models import db, User, Setup
 from views.auth import auth_bp
 from views.setup import setup_bp
@@ -61,6 +61,10 @@ app.before_request(check_ip_blacklist)
 app.before_request(check_ip_whitelist)
 app.before_request(check_for_setup)
 app.before_request(require_login)
+
+app.after_request(content_security_policy)
+app.after_request(x_content_type_options)
+app.after_request(x_frame_options)
 
 
 # ----------------- CSRF Token Route ----------------- #
