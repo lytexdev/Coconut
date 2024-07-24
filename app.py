@@ -6,7 +6,7 @@ from config import Config
 import logging
 from flask_migrate import Migrate
 
-from middleware import check_for_setup, require_login
+from middleware import check_ip_blacklist, check_ip_whitelist, check_for_setup, require_login
 from models import db, User, Setup
 from views.auth import auth_bp
 from views.main import main_bp
@@ -57,9 +57,10 @@ except (ImportError, docker.errors.DockerException) as e:
 
 
 # ----------------- Middleware ----------------- #
+app.before_request(check_ip_blacklist)
+app.before_request(check_ip_whitelist)
 app.before_request(check_for_setup)
 app.before_request(require_login)
-
 
 # ----------------- Index Route ----------------- #
 @app.route("/")
@@ -68,4 +69,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(host=Config.HOST, port=Config.PORT, debug=Config.DEBUG)
+    app.run(host=Config.HOST, port=Config.PORT, debug=Config.DEBUG == "True")

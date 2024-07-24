@@ -1,6 +1,4 @@
 # Todo
-- IP-Address Blocking
-    - Whitelist and blacklist management
 - Finish Setup
 - Implement settings page
 - Implement Custom Module System

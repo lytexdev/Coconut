@@ -15,5 +15,6 @@ class Config:
     DEBUG = os.getenv('DEBUG', False)
     RATE_LIMIT = os.getenv('RATE_LIMIT', '240 per minute')
     ALLOWED_ORIGINS = os.getenv('ALLOWED_ORIGINS', '*')
-    IP_WHITELIST = os.getenv('IP_WHITELIST', '')
+    WHITELIST = os.getenv('WHITELIST', False)
+    IP_WHITELIST = os.getenv('IP_WHITELIST', '127.0.0.1,192.168.0.1')
     IP_BLACKLIST = os.getenv('IP_BLACKLIST', '')

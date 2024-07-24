@@ -1,5 +1,6 @@
-from flask import request, redirect, url_for, session
+from flask import request, redirect, url_for, session, jsonify
 from models import Setup, User
+from config import Config
 
 
 def check_for_setup():
@@ -48,3 +49,31 @@ def require_login():
         if "logged_in" not in session and request.endpoint not in allowed_endpoints:
             if request.endpoint and not request.endpoint.startswith("static"):
                 return redirect(url_for("auth.login"))
+
+
+def check_ip_blacklist():
+    """
+    Middleware function to check if the request's IP address is in the blacklist.
+    If the IP is in the blacklist, access is denied.
+    """
+    ip_blacklist = Config.IP_BLACKLIST.split(",")
+
+    client_ip = request.remote_addr
+    
+    if client_ip in ip_blacklist:
+        return jsonify({"message": "Access denied"}), 403
+    
+
+def check_ip_whitelist():
+    """
+    Middleware function to check if the request's IP address is in the whitelist.
+    If WHITELIST is enabled and the IP is not in the whitelist, access is denied.
+    """
+    whitelist_enabled = Config.WHITELIST == "True"
+    ip_whitelist = Config.IP_WHITELIST.split(", ")
+
+    if whitelist_enabled:
+        client_ip = request.remote_addr
+
+        if client_ip not in ip_whitelist:
+            return jsonify({"message": "Access denied"}), 403
