@@ -1,4 +1,5 @@
 from flask import request, redirect, url_for, session, jsonify
+from flask_cors import CORS
 from models import Setup, User
 from config import Config
 
@@ -48,6 +49,18 @@ def require_login():
         if "logged_in" not in session and request.endpoint not in allowed_endpoints:
             if request.endpoint and not request.endpoint.startswith("static"):
                 return redirect(url_for("auth.login"))
+
+
+def configure_cors(app):
+    """
+    Configure CORS settings.
+    """
+    allowed_origins = Config.ALLOWED_ORIGINS
+    if allowed_origins == "*":
+        CORS(app, resources={r"/*": {"origins": "*"}})
+    else:
+        allowed_origins_list = allowed_origins.split(",")
+        CORS(app, resources={r"/*": {"origins": allowed_origins_list}})
 
 
 def check_ip_blacklist():

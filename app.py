@@ -7,7 +7,7 @@ from config import Config
 import logging
 from flask_migrate import Migrate
 
-from middleware import check_ip_blacklist, check_ip_whitelist, check_for_setup, content_security_policy, require_login, x_content_type_options, x_frame_options
+from middleware import check_ip_blacklist, check_ip_whitelist, check_for_setup, content_security_policy, require_login, x_content_type_options, x_frame_options, configure_cors
 from models import db, User, Setup
 from views.auth import auth_bp
 from views.setup import setup_bp
@@ -26,13 +26,7 @@ csrf = CSRFProtect(app)
 
 
 # ----------------- CORS ----------------- #
-allowed_origins = Config.ALLOWED_ORIGINS
-if allowed_origins == "*":
-    CORS(app, resources={r"/*": {"origins": "*"}})
-else:
-    allowed_origins_list = allowed_origins.split(",")
-    CORS(app, resources={r"/*": {"origins": allowed_origins_list}})
-
+configure_cors(app)
 
 # ----------------- Database ----------------- #
 db.init_app(app)
@@ -70,13 +64,16 @@ app.after_request(x_frame_options)
 # ----------------- CSRF Token Route ----------------- #
 @app.route("/api/csrf-token", methods=["GET"])
 def csrf_token():
+    """
+    Generate a CSRF Token for the client
+    """
     token = generate_csrf()
     return jsonify(csrf_token=token)
 
 
 # ----------------- Index Route ----------------- #
 @app.route("/")
-def index():
+def index():  
     return render_template("index.html")
 
 
