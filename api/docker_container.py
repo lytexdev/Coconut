@@ -26,7 +26,9 @@ def docker_start():
     data = request.get_json()
     container_id = data.get("id")
     container = client.containers.get(container_id)
+    
     container.start()
+
     logging.info(f"Container {container_id} started.")
     return jsonify({"status": "started"})
 
@@ -36,7 +38,9 @@ def docker_stop():
     data = request.get_json()
     container_id = data.get("id")
     container = client.containers.get(container_id)
+
     container.stop()
+
     logging.info(f"Container {container_id} stopped.")
     return jsonify({"status": "stopped"})
 
@@ -46,6 +50,8 @@ def docker_remove():
     data = request.get_json()
     container_id = data.get("id")
     container = client.containers.get(container_id)
+
     container.remove()
+
     logging.info(f"Container {container_id} removed.")
     return jsonify({"status": "removed"})

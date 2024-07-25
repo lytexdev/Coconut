@@ -13,14 +13,25 @@
     margin: 2rem 0;
 
     h2 {
-        color: darken($primary-color, 10%);
+        color: darken($primary-color, 5%);
         margin-bottom: 1rem;
     }
 
-    p, ul {
+    p, b, ul {
         margin: 0.5rem 0;
     }
+}
 
+.panel-module-grid {
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.panel-module-list {
     ul li {
         display: flex;
         align-items: center;

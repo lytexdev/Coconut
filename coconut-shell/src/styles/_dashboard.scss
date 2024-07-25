@@ -20,4 +20,8 @@ body {
         flex-wrap: wrap;
         justify-content: center;
     }
+
+    @media screen and (max-width: 768px) {
+        margin-top: 7.5rem;
+    }
 }

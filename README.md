@@ -13,7 +13,7 @@
 
 ## Requirements
 - Unix-based OS (Linux, macOS, etc. - Windows is not supported)
-- Python 3.6+
+- Python 3.8+
 - Node.js & npm
 
 ## Getting Started

@@ -1,17 +1,20 @@
 <template>
-    <div class="panel-module">
+    <div class="panel-module ">
         <h2>Docker</h2>
-        <ul>
-            <li v-for="container in containers" :key="container.id">
-                <span :class="['status-dot', container.status === 'running' ? 'online' : 'offline']"></span>
-                {{ container.name }} - {{ container.image }} - {{ container.status }}
-                <div class="btn-group">
-                    <button @click="confirmAction('start', container.id)">Start</button>
-                    <button @click="confirmAction('stop', container.id)">Stop</button>
-                    <button @click="confirmAction('remove', container.id)">Remove</button>
-                </div>
-            </li>
-        </ul>
+        
+        <div class="panel-module-list">
+            <ul>
+                <li v-for="container in containers" :key="container.id">
+                    <span :class="['status-dot', container.status === 'running' ? 'online' : 'offline']"></span>
+                    {{ container.name }} - {{ container.image }} - {{ container.status }}
+                    <div class="btn-group">
+                        <button @click="confirmAction('start', container.id)">Start</button>
+                        <button @click="confirmAction('stop', container.id)">Stop</button>
+                        <button @click="confirmAction('remove', container.id)">Remove</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 

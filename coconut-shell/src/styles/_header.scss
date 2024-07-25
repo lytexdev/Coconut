@@ -10,6 +10,7 @@
     background-color: $background-color;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 10;
+    user-select: none;
 
     .logo {
         display: flex;
