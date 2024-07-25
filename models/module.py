@@ -1,8 +1,6 @@
 import json
 from enum import Enum
 from models import db
-import uuid
-from sqlalchemy.dialects.postgresql import UUID
 
 with open("./coconut-shell/src/modules.json") as f:
     modules_config = json.load(f)
@@ -14,7 +12,7 @@ ModuleEnum = Enum(
 
 
 class Module(db.Model):
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Enum(ModuleEnum), nullable=False)
     enabled = db.Column(db.Boolean, default=True)
     order = db.Column(db.Integer, nullable=False)

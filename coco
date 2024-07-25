@@ -1,0 +1,260 @@
+#!/bin/bash
+
+MODULES_JSON_PATH="./coconut-shell/src/modules.json"
+COMPONENTS_DIR="./coconut-shell/src/components/modules"
+
+create_module() {
+    local name=$1
+    local component=$2
+    local enum=$(echo "$component" | tr '[:lower:]' '[:upper:]')
+
+    if [[ -z "$name" || -z "$component" ]]; then
+        echo "Usage: coco create module <name> <component>"
+        exit 1
+    fi
+
+    # Add the new module to modules.json using Python
+    python3 - <<EOF
+import json
+
+module = {"enum": "$enum", "component": "$component", "text": "$name"}
+
+with open("$MODULES_JSON_PATH", "r+") as f:
+    data = json.load(f)
+    data["modules"].append(module)
+    f.seek(0)
+    json.dump(data, f, indent=4)
+EOF
+
+    if [ $? -ne 0 ]; then
+        echo "Error updating modules.json"
+        exit 1
+    fi
+
+    # Create the component file
+    COMPONENT_FILE_PATH="$COMPONENTS_DIR/$component.vue"
+    if [ ! -f "$COMPONENT_FILE_PATH" ]; then
+        cat <<EOL > "$COMPONENT_FILE_PATH"
+<template>
+    <div class="panel-module">
+        <h2>$name Component</h2>
+    </div>
+</template>
+
+<script setup lang="ts">
+console.log('$name component loaded');
+</script>
+
+<style scoped>
+/* 
+Add your styles here or create a new SCSS file to use variables and import it at app.scss.
+*/
+</style>
+EOL
+        echo "Component file $COMPONENT_FILE_PATH created successfully."
+    else
+        echo "Component file $COMPONENT_FILE_PATH already exists."
+    fi
+
+    echo "Module $enum created successfully."
+}
+
+update_modules() {
+    flask db migrate -m "Update modules"
+    flask db upgrade
+    
+    flask shell <<EOF
+import json
+from models import db
+from models.module import Module, ModuleEnum
+
+def sync_modules():
+    with open("$MODULES_JSON_PATH") as f:
+        modules_config = json.load(f)
+    
+    existing_modules = {module.name.name for module in Module.query.all()}
+    new_modules = {module["enum"] for module in modules_config["modules"]}
+    
+    for module in modules_config["modules"]:
+        if module["enum"] not in existing_modules:
+            new_module = Module(
+                name=ModuleEnum[module["enum"]],
+                enabled=True,
+                order=module.get("order", len(existing_modules) + 1)
+            )
+            db.session.add(new_module)
+    
+    for module in modules_config["modules"]:
+        if module["enum"] in existing_modules:
+            existing_module = Module.query.filter_by(name=ModuleEnum[module["enum"]]).first()
+            existing_module.order = module.get("order", existing_module.order)
+            db.session.add(existing_module)
+    
+    db.session.commit()
+
+sync_modules()
+print("Modules synchronized successfully.")
+EOF
+}
+
+run_build_script() {
+    cd ./coconut-shell || exit
+    if ! npm run build; then
+        echo "Error during npm run build:"
+        exit 1
+    else
+        echo "npm run build completed successfully."
+    fi
+    cd ..
+
+    src_images_folder="./coconut-shell/src/assets/images"
+    dist_images_folder="./coconut-shell/dist/assets/images"
+
+    if [ -d "$src_images_folder" ]; then
+        mkdir -p "$dist_images_folder"
+        cp -r "$src_images_folder/"* "$dist_images_folder/"
+    fi
+
+    dist_folder="./coconut-shell/dist/assets"
+    static_folder="./static/assets"
+
+    mkdir -p "$static_folder"
+
+    find "$dist_folder" -type f | while read -r file; do
+        relative_path="${file#$dist_folder/}"
+        new_file_path="$static_folder/$relative_path"
+
+        if [[ $file == *.css ]]; then
+            new_file_path="$static_folder/main.css"
+        elif [[ $file == *.js ]]; then
+            new_file_path="$static_folder/main.js"
+        fi
+
+        mkdir -p "$(dirname "$new_file_path")"
+        echo "Moving $file to $new_file_path"
+        mv "$file" "$new_file_path"
+    done
+
+    rm -rf "$dist_folder"
+    echo -e "Frontend build completed successfully!"
+}
+
+run_install_script() {
+    cd ./coconut-shell || exit
+    if ! npm install; then
+        echo "Error during npm install."
+        exit 1
+    else
+        echo "npm dependencies installed successfully."
+    fi
+    cd ..
+
+    run_build_script
+
+    if ! command -v python3 &> /dev/null; then
+        echo "Python 3 could not be found"
+        exit 1
+    fi
+
+    if ! command -v pip3 &> /dev/null; then
+        echo "pip for Python 3 could not be found"
+        exit 1
+    fi
+
+    if [ -d ".venv" ]; then
+        echo "Virtual environment already exists."
+    else
+        python3 -m venv .venv
+    fi
+
+    source .venv/bin/activate
+
+    if ! pip install -r requirements.txt; then
+        echo "Error during pip install."
+        deactivate
+        exit 1
+    else
+        echo "Python dependencies installed successfully."
+    fi
+
+    deactivate
+
+    generate_secret_key() {
+        python3 -c "import os; print(os.urandom(24).hex())"
+    }
+
+    if [ ! -f ".env" ]; then
+        cp .env.example .env
+        SECRET_KEY=$(generate_secret_key)
+        sed -i "s/^SECRET_KEY=.*/SECRET_KEY=\"$SECRET_KEY\"/" .env
+        echo ".env file created from .env.example with a random SECRET_KEY."
+    else
+        echo ".env file already exists."
+    fi
+
+    source .venv/bin/activate
+
+    if ! flask db init; then
+        echo "Database already initialized."
+    fi
+
+    if ! flask db migrate -m "Initial migration"; then
+        echo "Error during database migration."
+        deactivate
+        exit 1
+    fi
+
+    if ! flask db upgrade; then
+        echo "Error during database upgrade."
+        deactivate
+        exit 1
+    fi
+
+    echo "Database initialized successfully."
+
+    deactivate
+
+    echo "Installation completed successfully!"
+}
+
+print_help() {
+    echo ""
+    echo "Coco - Coconut CLI"
+    echo "Usage: $0 {create module <name> <component>|update db|build|install}"
+    echo
+    echo "Commands:"
+    echo "  install                                   Install Coconut"
+    echo "  update db                                 Update the database with new modules"
+    echo "  build                                     Build the frontend"
+    echo "  create module <name> <component>          Create a new module"
+    echo ""
+}
+
+case "$1" in
+    build)
+        run_build_script
+        ;;
+    install)
+        run_install_script
+        ;;
+    create)
+        if [[ "$2" == "module" ]]; then
+            create_module "$3" "$4"
+        else
+            echo "Usage: ./coco create module <name> <component>"
+            exit 1
+        fi
+        ;;
+    update)
+        if [[ "$2" == "db" ]]; then
+            update_modules
+        else
+            echo "Usage: ./coco update db"
+            exit 1
+        fi
+        ;;
+    *)
+        print_help
+        exit 1
+        ;;
+esac

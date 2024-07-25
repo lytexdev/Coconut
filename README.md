@@ -7,9 +7,6 @@
 ## Documentation
 [lytexmedia.com/coconut](https://lytexmedia.com/coconut)
 
-## Preview
-![Preview](./preview.png)
-
 ## Technologies
 - **Backend**: Flask
 - **Frontend**: Vue.js, SCSS
@@ -29,26 +26,24 @@ cd Coconut
 
 **Install Coconut**
 ```bash
-chmod +x install.sh
-./install.sh
-```
-
-**Activate venv**
-```bash
-source .venv/bin/activate
-```
-
-**Run the server**
-```bash
-python3 app.py
+chmod +x coco
+./coco install
 ```
 
 ## Development
 
 **Build frontend**
 ```bash
-chmod +x build.sh
-./build.sh
+./coco build
+```
+
+**Create custom modules**
+```bash
+./coco create module <name> <VueComponentName>
+```
+*Example:*
+```bash
+./coco create module 'My Module' MyModule
 ```
 
 **Initialize the database**
