@@ -29,11 +29,10 @@ const router = useRouter()
 
 const username = ref('')
 const password = ref('')
-const role = ref('OWNER')
+const role = ref('ADMIN')
 const messages = ref([])
 
 const roles = [
-    { value: 'OWNER', text: 'Owner' },
     { value: 'ADMIN', text: 'Admin' },
 ]
 

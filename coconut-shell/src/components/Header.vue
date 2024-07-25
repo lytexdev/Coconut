@@ -4,7 +4,7 @@
 
         <nav class="nav-main">
             <button @click="logout" class="btn btn-logout">Logout</button>
-            <button @click="configure" class="btn btn-config">Configuration</button>
+            <button @click="settings" class="btn btn-config">Settings</button>
         </nav>
     </header>
 </template>
@@ -27,8 +27,7 @@ const logout = () => {
         })
 }
 
-const configure = () => {
-    // TODO: Implement configuration page
-    alert('Configuration button clicked')
+const settings = () => {
+    router.push('/settings')
 }
 </script>

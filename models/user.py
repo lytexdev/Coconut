@@ -5,7 +5,6 @@ from sqlalchemy.dialects.postgresql import UUID
 
 
 class RoleEnum(Enum):
-    OWNER = "Owner"
     ADMIN = "Admin"
 
 
