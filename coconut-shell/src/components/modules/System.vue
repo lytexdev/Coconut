@@ -1,11 +1,9 @@
 <template>
     <div class="panel-module system-info">
-        <div class="left-panel">
-            <h2>System Information</h2>
-            <p>CPU Usage: {{ cpuUsage }}%</p>
-            <p>RAM Usage: {{ ramUsage }}%</p>
-            <p>Disk Usage: {{ diskUsage }}</p>
-        </div>
+        <h2>System Information</h2>
+        <p>CPU Usage: {{ cpuUsage }}%</p>
+        <p>RAM Usage: {{ ramUsage }}%</p>
+        <p>Disk Usage: {{ diskUsage }}</p>
     </div>
 </template>
 

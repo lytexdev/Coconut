@@ -1,4 +1,3 @@
-@import './modules/system-info';
 @import './modules/backup';
 
 .panel-module {
@@ -6,7 +5,7 @@
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1300px;
     background-color: $panel-background-color;
     padding: 2rem;
     border-radius: 20px;
@@ -14,7 +13,7 @@
     margin: 2rem 0;
 
     h2 {
-        color: $primary-color;
+        color: darken($primary-color, 10%);
         margin-bottom: 1rem;
     }
 
@@ -44,39 +43,5 @@
                 transform: scale(1.05);
             }
         }
-    }
-}
-
-.left-panel, .right-panel {
-    flex: 1;
-    margin: 0 1rem;
-}
-
-.left-panel {
-    display: flex;
-    flex-direction: column;
-    margin-left: 0 !important;
-}
-
-.right-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: auto;
-}
-
-.status-dot {
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 10px;
-
-    &.online {
-        background-color: $success-color;
-    }
-
-    &.offline {
-        background-color: $danger-color;
     }
 }
