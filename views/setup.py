@@ -4,7 +4,6 @@ from models.user import User, RoleEnum
 from models.setup import Setup
 from models.module import Module, ModuleEnum
 import logging
-import bcrypt
 import docker
 import os
 import json
@@ -38,8 +37,8 @@ def create_user():
         logging.error(f"User creation failed: Username {username} already exists.")
         return jsonify(success=False, message="Username already exists.")
 
-    password_hash = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
-    new_user = User(username=username, password_hash=password_hash, role=RoleEnum[role])
+    new_user = User(username=username, role=RoleEnum[role])
+    new_user.password = password
     db.session.add(new_user)
     db.session.commit()
     logging.info(f"User {username} created successfully.")

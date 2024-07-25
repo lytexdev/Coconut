@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, redirect, url_for, request, sessio
 from models import db
 from models.user import User
 import logging
-import bcrypt
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -15,9 +14,7 @@ def login():
         password = data.get("password")
 
         user = User.query.filter_by(username=username).first()
-        if user and bcrypt.checkpw(
-            password.encode("utf-8"), user.password_hash.encode("utf-8")
-        ):
+        if user and user.check_password_hash(password):
             session["logged_in"] = True
             session["user_id"] = str(user.id)
             session["role"] = user.role.value
