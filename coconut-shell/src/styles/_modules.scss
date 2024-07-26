@@ -9,7 +9,7 @@
     background-color: $panel-background-color;
     padding: 2rem;
     border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px $box-shadow;
     margin: 2rem 0;
 
     h2 {
@@ -17,8 +17,14 @@
         margin-bottom: 1rem;
     }
 
+    h3, h4, h5 {
+        color: darken($text-color, 5%);
+        margin-bottom: 0.25rem;
+    }
+
     p, b, ul {
         margin: 0.5rem 0;
+        color: $secondary-text-color;
     }
 }
 

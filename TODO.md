@@ -1,7 +1,7 @@
 # Todo
 - Finish Setup
+    - Add Backup Setup
 - Implement settings page
-- Implement Custom Module System
 - Add custom CSS field in settings
 - Tutorial for setting up Coconut (lytexmedia.com/coconut)
 - YouTube Video for setting up Coconut
@@ -10,7 +10,7 @@
 
 # Feature Ideas
 - File Upload Module
-    - Encryption with password
+    - Encryption with gpg
     - File sharing
 - Automation and Scripting:
     - Predfined scripts
@@ -20,9 +20,14 @@
     - Real-time monitoring of system resources
     - Performance metrics and graphs
     - Alerts and notifications for resource usage
+- URL Shortener
+    - Custom short URLs
 - Discord Integration
 - Network Management
+    - Bandwidth monitoring
+    - Firewall management
 - Advanced Backup and Restore:
+    - Encryption and compression with GPG and XZ
     - Incremental and differential backups
     - Granular restore options for files, databases, and applications
     - Cloud support

@@ -1,7 +1,6 @@
 <template>
     <header class="header-main">
         <Logo />
-
         <nav class="nav-main">
             <button @click="logout" class="btn btn-logout">Logout</button>
             <button @click="settings" class="btn btn-config">Settings</button>

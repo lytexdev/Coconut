@@ -1,6 +1,5 @@
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
-
 import App from "./App.vue";
 import Dashboard from "./components/Dashboard.vue";
 import Login from "./components/Login.vue";

@@ -10,9 +10,11 @@
 ## Technologies
 - **Backend**: Flask
 - **Frontend**: Vue.js, SCSS
+- **Database**: SQLite
 
 ## Requirements
-- Unix-based OS (Linux, macOS, etc. - Windows is not supported)
+- Unix-based OS (other will perhaps work, but are not supported)
+    - Recommended: Linux (Debian, Ubuntu, Fedora, CentOS, Arch, etc.)
 - Python 3.8+
 - Node.js & npm
 
@@ -39,7 +41,7 @@ chmod +x coco
 
 **Create custom modules**
 ```bash
-./coco create module <name> <VueComponentName>
+./coco create module [name] [VueComponentName]
 ```
 *Example:*
 ```bash

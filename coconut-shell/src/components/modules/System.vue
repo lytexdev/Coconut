@@ -8,20 +8,24 @@
                 <p>CPU Usage: {{ cpuUsage }}%</p>
             </div>
             <div>
-                <p>RAM Usage: {{ ramUsage }}</p>
-                <p>RAM Total: {{ ramTotal }}</p>
-                <p>RAM Available: {{ ramAvailable }}</p>
-                <p>RAM Used: {{ ramUsed }}</p>
+                <h3>Random-Access Memory</h3>
+                <p>Usage: {{ ramUsage }}</p>
+                <p>Total: {{ ramTotal }}</p>
+                <p>Available: {{ ramAvailable }}</p>
+                <p>Used: {{ ramUsed }}</p>
             </div>
             <div>
-                <p>Swap Total: {{ swapTotal }}</p>
-                <p>Swap Used: {{ swapUsed }}</p>
-                <p>Swap Free: {{ swapFree }}</p>
+                <h3>Swap</h3>
+                <p>Total: {{ swapTotal }}</p>
+                <p>Used: {{ swapUsed }}</p>
+                <p>Free: {{ swapFree }}</p>
             </div>
             <div>
-                <p>Disk Usage: {{ diskUsage }}</p>
-                <p>Disk Read: {{ diskRead }}</p>
-                <p>Disk Write: {{ diskWrite }}</p>
+                <h3>Disk</h3>
+                <p>Usage: {{ diskPercent }}%</p>
+                <p>Storage: {{ diskUsed }} / {{ diskTotal }}</p>
+                <p>Total Read: {{ diskRead }}</p>
+                <p>Total Written: {{ diskWrite }}</p>
             </div>
         </div>
     </div>
@@ -38,11 +42,11 @@ const ramUsed = ref('...')
 const swapTotal = ref('...')
 const swapUsed = ref('...')
 const swapFree = ref('...')
-const diskUsage = ref('...')
+const diskPercent = ref('...')
+const diskTotal = ref('...')
+const diskUsed = ref('...')
 const diskRead = ref('...')
 const diskWrite = ref('...')
-const bytesSent = ref('...')
-const bytesReceived = ref('...')
 const uptime = ref('...')
 
 const updateSystemInfo = () => {
@@ -57,7 +61,9 @@ const updateSystemInfo = () => {
             swapTotal.value = data.swap_total
             swapUsed.value = data.swap_used
             swapFree.value = data.swap_free
-            diskUsage.value = data.disk_used
+            diskPercent.value = data.disk_percent + '%'
+            diskTotal.value = data.disk_total
+            diskUsed.value = data.disk_used
             diskRead.value = data.disk_read
             diskWrite.value = data.disk_write
             uptime.value = data.uptime
