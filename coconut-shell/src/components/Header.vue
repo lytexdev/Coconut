@@ -8,22 +8,25 @@
     </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
-import Logo from './Logo.vue';
+import Logo from './Logo.vue'
 
 const router = useRouter()
 
-const logout = () => {
-    fetch('/logout', {
-        method: 'GET',
-    })
-        .then(() => {
+const logout = async () => {
+    try {
+        const response = await fetch('/logout', {
+            method: 'GET',
+        })
+        if (response.ok) {
             router.push('/login')
-        })
-        .catch((error) => {
-            console.error('Error logging out:', error)
-        })
+        } else {
+            console.error('Error logging out:', await response.text())
+        }
+    } catch (error) {
+        console.error('Error logging out:', error)
+    }
 }
 
 const settings = () => {
