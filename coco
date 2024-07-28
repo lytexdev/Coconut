@@ -223,11 +223,20 @@ print_help() {
     echo "Usage: $0 {create module <name> <component>|update db|build|install}"
     echo
     echo "Commands:"
-    echo "  install                                   Install Coconut"
-    echo "  update db                                 Update the database with new modules"
-    echo "  build                                     Build the frontend"
-    echo "  create module <name> <component>          Create a new module"
+    echo "  install                                 Install Coconut"
+    echo "  update db                               Update the database with new modules"
+    echo "  build                                   Build the frontend"
+    echo "  create module <name> <component>        Create a new module"
+    echo "  run                                     Run the Server"
     echo ""
+}
+
+run_server() {
+    run_install_script
+
+    source .venv/bin/activate
+    python3 app.py
+
 }
 
 case "$1" in
@@ -252,6 +261,9 @@ case "$1" in
             echo "Usage: ./coco update db"
             exit 1
         fi
+        ;;
+    run)
+        run_server
         ;;
     *)
         print_help
