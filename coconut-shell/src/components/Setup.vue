@@ -3,7 +3,7 @@
         <div class="setup-header">
             <Logo />
             <h1>Create Login < Setup</h1>
-            <p>Create a Admin user to login to Coconut.
+            <p>Create an Admin user to login to Coconut.
                 <br>After setup is complete, you can add more users at the configuration page.
             </p>
         </div>
@@ -36,6 +36,7 @@
             <h1>Finish < Setup</h1>
             <p>Setup is complete! You can now finish the setup and start using Coconut.</p>
         </div>
+        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
         <div class="separator"></div>
         <div class="setup-controls">
             <button @click="previousStep" class="btn">Back</button>
@@ -45,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getCsrfToken } from '@/csrf';
 import CreateUser from './setup/CreateUser.vue';
@@ -80,9 +81,10 @@ const finishSetup = async () => {
         if (data.success) {
             router.push('/login');
         } else {
-            alert('Error finishing setup');
+            alert(data.message);
         }
     } catch (error) {
+        alert('An error occurred while finishing the setup.');
         console.error('Error:', error);
     }
 }

@@ -119,6 +119,10 @@ def get_setup_status():
 
 @setup_bp.route("/finish", methods=["POST"])
 def finish_setup():
+    if not User.query.filter_by(role=RoleEnum.ADMIN).first():
+        logging.error("Setup finish failed: No admin user created.")
+        return jsonify(success=False, message="You must create at least one admin user before!")
+
     setup_record = Setup.query.first()
     if setup_record:
         setup_record.completed = True

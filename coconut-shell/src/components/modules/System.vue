@@ -57,7 +57,7 @@ const updateSystemInfo = async () => {
         swapTotal.value = data.swap_total
         swapUsed.value = data.swap_used
         swapFree.value = data.swap_free
-        diskPercent.value = data.disk_percent + '%'
+        diskPercent.value = data.disk_percent
         diskTotal.value = data.disk_total
         diskUsed.value = data.disk_used
         diskRead.value = data.disk_read
