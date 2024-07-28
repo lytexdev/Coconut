@@ -13,8 +13,8 @@
 - **Database**: SQLite
 
 ## Requirements
-- Unix-based OS (other will perhaps work, but are not supported)
-    - Recommended: Linux (Debian, Ubuntu, Fedora, CentOS, Arch, etc.)
+- Unix-based OS
+    - Recommended: Linux (Arch, Debian, Ubuntu etc.)
 - Python 3.8+
 - Node.js & npm
 
@@ -26,10 +26,9 @@ git clone https://github.com/ximmanuel/Coconut.git
 cd Coconut
 ```
 
-**Install Coconut**
+**Run Coconut**
 ```bash
-chmod +x coco
-./coco install
+./coco run
 ```
 
 ## Development
