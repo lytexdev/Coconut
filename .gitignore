@@ -4,6 +4,8 @@ static/assets/images/*
 static/assets/*.js
 static/assets/*.css
 static/assets/*.ttf
+custom_modules/*
+!custom_modules/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

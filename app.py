@@ -1,11 +1,13 @@
 from flask import Flask, redirect, request, url_for, render_template, jsonify
 from flask_limiter import Limiter
 from flask_cors import CORS
+from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_limiter.util import get_remote_address
 from config import Config
+import importlib
 import logging
-from flask_migrate import Migrate
+import os
 
 from middleware import check_ip_blacklist, check_ip_whitelist, check_for_setup, content_security_policy, require_login, x_content_type_options, x_frame_options, configure_cors
 from models import db, User, Setup
@@ -33,7 +35,7 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 
-# ----------------- Blueprints ----------------- #
+# ----------------- URL Prefixes ----------------- #
 app.register_blueprint(auth_bp)
 app.register_blueprint(setup_bp, url_prefix="/setup")
 app.register_blueprint(system_info_bp, url_prefix="/api")
@@ -75,6 +77,35 @@ def csrf_token():
 @app.route("/")
 def index():  
     return render_template("index.html")
+
+
+# ----------------- Custom Module Registration ----------------- #
+def register_custom_modules(app):
+    custom_modules_dir = os.path.join(os.path.dirname(__file__), 'custom_modules')
+
+    if not os.path.exists(custom_modules_dir):
+        logging.info(f"No custom modules directory found at {custom_modules_dir}")
+        return
+
+    for module_name in os.listdir(custom_modules_dir):
+        module_path = os.path.join(custom_modules_dir, module_name)
+        if os.path.isdir(module_path) and os.path.exists(os.path.join(module_path, '__init__.py')):
+            try:
+                module = importlib.import_module(f'custom_modules.{module_name}')
+                expected_bp_name = f'{module_name}_bp'
+                
+                if hasattr(module, expected_bp_name):
+                    blueprint = getattr(module, expected_bp_name)
+                    app.register_blueprint(blueprint, url_prefix="/api")
+                    logging.info(f"Registered custom module: {module_name}")
+                else:
+                    logging.warning(f"No blueprint found in custom module {module_name}")
+
+            except ImportError as e:
+                logging.error(f"Failed to import custom module {module_name}: {e}")
+
+register_custom_modules(app)
+
 
 
 if __name__ == "__main__":

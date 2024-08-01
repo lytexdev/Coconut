@@ -79,8 +79,9 @@ def get_modules():
 @setup_bp.route("/available-modules", methods=["GET"])
 def get_available_modules():
     try:
-        json_path = os.path.join(os.getcwd(), 'coconut-shell', 'src', 'modules.json')
-        logging.info(f"Loading modules from: {json_path}")
+        json_path = os.path.join(os.getcwd(), 'coconut-shell', 'src', 'core_modules.json')
+        custom_json_path = os.path.join(os.getcwd(), 'coconut-shell', 'src', 'custom_modules.json')
+        logging.info(f"Loading core modules from: {json_path}")
         
         if not os.path.exists(json_path):
             logging.error(f"modules.json file not found at: {json_path}")
@@ -88,7 +89,16 @@ def get_available_modules():
 
         with open(json_path) as f:
             modules_data = json.load(f)
-            logging.info(f"Loaded modules: {modules_data}")
+            logging.info(f"Loaded core modules: {modules_data}")
+
+        custom_modules_data = []
+        if os.path.exists(custom_json_path):
+            with open(custom_json_path) as custom_f:
+                custom_modules_data = json.load(custom_f).get("modules", [])
+                logging.info(f"Loaded custom modules: {custom_modules_data}")
+        
+        # Merge core and custom modules
+        all_modules = modules_data["modules"] + custom_modules_data
 
         docker_client = docker.from_env()
         docker_client.ping()
@@ -97,7 +107,7 @@ def get_available_modules():
         docker_available = False
 
     available_modules = [
-        module for module in modules_data["modules"]
+        module for module in all_modules
         if module["enum"] != "DOCKER" or docker_available
     ]
 
