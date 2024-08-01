@@ -6,6 +6,9 @@ static/assets/*.css
 static/assets/*.ttf
 custom_modules/*
 !custom_modules/.gitkeep
+coconut-shell/src/custom_modules.json
+!coconut-shell/src/core_modules.json
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
