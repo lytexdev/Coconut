@@ -3,15 +3,16 @@
     - Add Backup Setup
 - Implement settings page
 - Add custom CSS field in settings
-- Tutorial for setting up Coconut (lytexmedia.com/coconut)
+- Create Documentation for Coconut
 - YouTube Video for setting up Coconut
 
 <br>
 
 # Feature Ideas
 - File Upload Module
-    - Encryption with gpg
     - File sharing
+    - Download only with password
+    - GPG Encryption
 - Automation and Scripting:
     - Predfined scripts
     - Support for scripts and automation tasks (e.g., Bash, Python)
