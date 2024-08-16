@@ -19,6 +19,9 @@ def check_for_setup():
             "setup.finish_setup",
             "setup.setup_index",
             "setup.get_available_modules",
+            "setup.create_backup",
+            "setup.get_backups",
+            "setup.delete_backup",
             "csrf_token"
         ]
         
@@ -44,6 +47,9 @@ def require_login():
             "setup.finish_setup",
             "setup.setup_index",
             "setup.get_available_modules",
+            "setup.create_backup",
+            "setup.get_backups",
+            "setup.delete_backup",
             "csrf_token"
         ]
         if "logged_in" not in session and request.endpoint not in allowed_endpoints:

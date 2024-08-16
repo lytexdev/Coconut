@@ -63,7 +63,7 @@ app.after_request(x_content_type_options)
 app.after_request(x_frame_options)
 
 
-# ----------------- CSRF Token Route ----------------- #
+# ----------------- CSRF Route ----------------- #
 @app.route("/api/csrf-token", methods=["GET"])
 def csrf_token():
     """
@@ -105,7 +105,6 @@ def register_custom_modules(app):
                 logging.error(f"Failed to import custom module {module_name}: {e}")
 
 register_custom_modules(app)
-
 
 
 if __name__ == "__main__":

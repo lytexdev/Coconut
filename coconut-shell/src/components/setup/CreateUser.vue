@@ -30,7 +30,6 @@ const router = useRouter()
 const username = ref('')
 const password = ref('')
 const role = ref('ADMIN')
-const messages = ref([])
 
 const roles = [
     { value: 'ADMIN', text: 'Admin' },

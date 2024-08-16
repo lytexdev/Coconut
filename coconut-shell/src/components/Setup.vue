@@ -30,17 +30,32 @@
         </div>
     </div>
 
+    <div class="container" v-else-if="setup === 3">
+        <div class="setup-header">
+            <Logo />
+            <h1>Create Backup < Setup</h1>
+            <p>Create automatic backups. Backups without a schedule can be created manually.</p>
+        </div>
+        <CreateBackup />
+        <div class="separator"></div>
+        <div class="setup-controls">
+            <button @click="previousStep" class="btn">Back</button>
+            <button @click="nextStep" class="btn btn-success">Next</button>
+        </div>
+    </div>
+
     <div class="container" v-else>
         <div class="setup-header">
             <Logo />
             <h1>Finish < Setup</h1>
-            <p>Setup is complete! You can now finish the setup and start using Coconut.</p>
+                    <p>Setup is complete! You can now finish the setup and start using Coconut.</p>
         </div>
         <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
         <div class="separator"></div>
         <div class="setup-controls">
             <button @click="previousStep" class="btn">Back</button>
-            <button @click="finishSetup" class="btn btn-success setup-finish-btn" title="Click to finish the setup">Finish Setup</button>
+            <button @click="finishSetup" class="btn btn-success setup-finish-btn"
+                title="Click to finish the setup">Finish Setup</button>
         </div>
     </div>
 </template>
@@ -49,9 +64,11 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getCsrfToken } from '@/csrf';
+import Logo from './Logo.vue';
+
 import CreateUser from './setup/CreateUser.vue';
 import ModuleSelection from './setup/ModuleSelection.vue';
-import Logo from './Logo.vue';
+import CreateBackup from './setup/CreateBackup.vue';
 
 const router = useRouter();
 const setup = ref<number>(1);

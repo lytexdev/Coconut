@@ -7,8 +7,8 @@ class Config:
     """
     Set Flask configuration variables from .env file
     """
-    SECRET_KEY = os.getenv('SECRET_KEY', '!SuperSecretKey!')
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+    SECRET_KEY = os.getenv('SECRET_KEY', '!@?SuperSecretKey?@!')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///coconut.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     HOST = os.getenv('HOST', '127.0.0.1')
     PORT = os.getenv('PORT', 8080)
