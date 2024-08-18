@@ -1,6 +1,6 @@
 # Todo
 
-- Seperate setup routes
+- Improve middleware endpoint registration
 - Implement backup system
 - Implement settings page
 - Add custom CSS field in settings
