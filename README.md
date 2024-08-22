@@ -1,11 +1,8 @@
 # Coconut
 
 ## Overview
-[Coconut](https://lytexmedia.com/coconut) is a self-hosted and simple Dashboard to manage your server. It's built with Flask and Vue.js.
+Coconut is a self-hosted and simple Dashboard to manage your server. It's built with Flask and Vue.js.
 **It's still in development and not ready for production.**
-
-## Documentation
-[*soon*](https://lytexmedia.com/coconut)
 
 ## Technologies
 - **Backend**: Flask
@@ -13,11 +10,11 @@
 - **Database**: SQLite
 
 ## Requirements
-- Unix-based OS (Recommended: Arch)
+- Unix-based OS
 - Python 3.8+
 - Node.js & npm
 
-## Getting Started
+## Installation
 
 **Clone the repository**
 ```bash
