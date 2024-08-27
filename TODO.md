@@ -1,16 +1,14 @@
 # Todo
-
 - Improve middleware endpoint registration
 - Implement backup system
 - Implement settings page
+- Implement frp module
 - Add custom CSS field in settings
 - Create Documentation for Coconut
-- YouTube Video for setting up Coconut
 
 <br>
 
 # Feature Ideas
-
 - File Upload Module
   - File sharing
   - Download only with password

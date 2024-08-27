@@ -5,6 +5,16 @@ CUSTOM_MODULES_JSON_PATH="./coconut-shell/src/custom_modules.json"
 COMPONENTS_DIR="./coconut-shell/src/components/modules"
 CUSTOM_MODULES_DIR="./custom_modules"
 
+# Determine whether to use python3 or python
+PYTHON_CMD="python3"
+if ! command -v python3 &> /dev/null; then
+    if command -v python &> /dev/null; then
+        PYTHON_CMD="python"
+    else
+        echo "Neither python3 nor python found. Please install Python."
+        exit 1
+    fi
+fi
 
 run_install_script() {
     cd ./coconut-shell || exit
@@ -18,20 +28,22 @@ run_install_script() {
 
     run_build_script
 
-    if ! command -v python3 &> /dev/null; then
-        echo "Python 3 could not be found"
+    if ! command -v "$PYTHON_CMD" &> /dev/null; then
+        echo "Python could not be found"
         exit 1
     fi
 
     if ! command -v pip3 &> /dev/null; then
-        echo "pip for Python 3 could not be found"
-        exit 1
+        if ! command -v pip &> /dev/null; then
+            echo "pip for Python could not be found"
+            exit 1
+        fi
     fi
 
     if [ -d ".venv" ]; then
         echo "Virtual environment already exists."
     else
-        python3 -m venv .venv
+        "$PYTHON_CMD" -m venv .venv
     fi
 
     source .venv/bin/activate
@@ -47,7 +59,7 @@ run_install_script() {
     deactivate
 
     generate_secret_key() {
-        python3 -c "import os; print(os.urandom(24).hex())"
+        "$PYTHON_CMD" -c "import os; print(os.urandom(24).hex())"
     }
 
     if [ ! -f ".env" ]; then
@@ -66,7 +78,6 @@ run_install_script() {
     echo "Installation completed successfully!"
 }
 
-
 create_module() {
     local name=$1
     local component=$2
@@ -79,7 +90,7 @@ create_module() {
     fi
 
     # Add the new module to custom_modules.json using Python
-    python3 - <<EOF
+    "$PYTHON_CMD" - <<EOF
 import json
 module = {"enum": "$enum", "component": "$component", "text": "$name"}
 
@@ -141,19 +152,18 @@ EOL
     update_modules
 }
 
-
 update_modules() {
     flask db migrate -m "Update modules"
     flask db upgrade
     
-    python <<EOF
+    "$PYTHON_CMD" <<EOF
 import json
-from app import app  # Importiere die Flask-App
+from app import app  # Import the Flask app
 from models import db
 from models.module import Module, ModuleEnum
 
 def sync_modules():
-    with app.app_context():  # Stelle den Anwendungskontext bereit
+    with app.app_context():
         with open("$MODULES_JSON_PATH") as f:
             modules_config = json.load(f)
         
@@ -186,7 +196,6 @@ sync_modules()
 print("Modules synchronized successfully.")
 EOF
 }
-
 
 create_db() {
     flask db init
@@ -268,10 +277,8 @@ print_help() {
 }
 
 run_server() {
-    run_install_script
-
     source .venv/bin/activate
-    python3 app.py
+    "$PYTHON_CMD" app.py
 }
 
 case "$1" in

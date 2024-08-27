@@ -22,6 +22,11 @@ git clone https://github.com/ximmanuel/Coconut.git
 cd Coconut
 ```
 
+**Install Coconut**
+```bash
+./coco install
+```
+
 **Run Coconut**
 ```bash
 ./coco run
@@ -40,7 +45,8 @@ cd Coconut
 ```
 *Example:*
 ```bash
-./coco create module 'System Info' SystemInfo
+# This creates a Vue component, registers it in custom_modules.json & creates an API endpoint for it.
+./coco create module 'My peak Module' MyPeakModule
 ```
 
 **Initialize the database**
