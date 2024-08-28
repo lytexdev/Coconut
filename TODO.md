@@ -1,5 +1,4 @@
 # Todo
-- Improve middleware endpoint registration
 - Implement backup system
 - Implement settings page
 - Implement frp module
