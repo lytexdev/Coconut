@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Logo />
         <h1>Login < Coconut</h1>
 
         <form @submit.prevent="login">
@@ -25,6 +26,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getCsrfToken } from '@/csrf'
+import Logo from './Logo.vue';
 
 const router = useRouter()
 const username = ref('')
