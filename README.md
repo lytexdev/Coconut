@@ -18,7 +18,7 @@ Coconut is a self-hosted and simple Dashboard to manage your server. It's built 
 
 **Clone the repository**
 ```bash
-git clone https://github.com/ximmanuel/Coconut.git
+git clone https://github.com/lytexdev/Coconut.git
 cd Coconut
 ```
 
