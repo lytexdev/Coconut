@@ -2,7 +2,8 @@ Flask
 flask-limiter
 flask-sqlalchemy
 flask-migrate
+flask-cors
+Flask-WTF
 python-dotenv
-bcrypt
 psutil
 docker

@@ -1,3 +1,42 @@
+select {
+	width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #292929;
+    color: $text-color;
+}
+
+label {
+	display: flex;
+	align-items: center;
+	color: $primary-color;
+	width: 100%;
+	
+	input[type="checkbox"] {
+		margin-right: 0.5rem;
+	}
+}
+
+input {
+	padding: 5px;
+	box-sizing: border-box;
+	border: 1px solid #333;
+	border-radius: 5px;
+	background-color: #292929;
+	color: $text-color;
+}
+
+input[type="number"] {
+	padding: 5px;
+	box-sizing: border-box;
+	border: 1px solid #333;
+	border-radius: 5px;
+	background-color: #292929;
+	color: $text-color;
+}
+
 .form-group {
 	margin-bottom: 15px;
 
@@ -14,36 +53,6 @@
 		border: 1px solid #333;
 		border-radius: 5px;
 		background-color: #2c2c2c;
-		color: #fff;
+		color: $text-color;
 	}
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #333;
-    border-radius: 5px;
-    background-color: #292929;
-    color: #fff;
-}
-
-label {
-	display: flex;
-	align-items: center;
-	color: $primary-color;
-	width: 100%;
-
-	input[type="checkbox"] {
-		margin-right: 0.5rem;
-	}
-}
-
-input[type="number"] {
-	padding: 5px;
-	box-sizing: border-box;
-	border: 1px solid #333;
-	border-radius: 5px;
-	background-color: #292929;
-	color: #fff;
 }

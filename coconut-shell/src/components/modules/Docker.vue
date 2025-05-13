@@ -1,36 +1,45 @@
 <template>
-    <div class="panel-module">
+    <div class="panel-module ">
         <h2>Docker</h2>
-        <ul>
-            <li v-for="container in containers" :key="container.id">
-                <span :class="['status-dot', container.status === 'running' ? 'online' : 'offline']"></span>
-                {{ container.name }} - {{ container.image }} - {{ container.status }}
-                <div class="btn-group">
-                    <button @click="confirmAction('start', container.id)">Start</button>
-                    <button @click="confirmAction('stop', container.id)">Stop</button>
-                    <button @click="confirmAction('remove', container.id)">Remove</button>
-                </div>
-            </li>
-        </ul>
+        <div class="panel-module-list">
+            <ul>
+                <li v-for="container in containers" :key="container.id">
+                    <span :class="['status-dot', container.status === 'running' ? 'online' : 'offline']"></span>
+                    {{ container.name }} - {{ container.image }} - {{ container.status }}
+                    <div class="btn-group">
+                        <button @click="confirmAction('start', container.id)">Start</button>
+                        <button @click="confirmAction('stop', container.id)">Stop</button>
+                        <button @click="confirmAction('remove', container.id)">Remove</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-const containers = ref([])
-
-const updateDockerContainers = () => {
-    fetch('/api/docker_containers')
-        .then((response) => response.json())
-        .then((data) => {
-            containers.value = data
-        })
-        .catch((error) => console.error('Error fetching Docker containers:', error))
+interface Container {
+    id: string;
+    name: string;
+    image: string;
+    status: string;
 }
 
-const confirmAction = (action, id) => {
-    const actionMessages = {
+const containers = ref<Container[]>([])
+
+const updateDockerContainers = async () => {
+    try {
+        const response = await fetch('/api/docker_containers')
+        containers.value = await response.json()
+    } catch (error) {
+        console.error('Error fetching Docker containers:', error)
+    }
+}
+
+const confirmAction = (action: string, id: string) => {
+    const actionMessages: Record<string, string> = {
         start: 'start this container',
         stop: 'stop this container',
         remove: 'remove this container',
@@ -40,25 +49,29 @@ const confirmAction = (action, id) => {
     }
 }
 
-const performAction = (action, id) => {
-    const urls = {
+const performAction = async (action: string, id: string) => {
+    const urls: Record<string, string> = {
         start: '/api/docker_start',
         stop: '/api/docker_stop',
         remove: '/api/docker_remove',
     }
-    fetch(urls[action], {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: id }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
+    try {
+        const response = await fetch(urls[action], {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id }),
+        })
+        if (response.ok) {
             console.log(`Container ${action}ed successfully`)
             updateDockerContainers()
-        })
-        .catch((error) => console.error(`Error ${action}ing container:`, error))
+        } else {
+            console.error(`Error ${action}ing container:`, await response.text())
+        }
+    } catch (error) {
+        console.error(`Error ${action}ing container:`, error)
+    }
 }
 
 onMounted(() => {

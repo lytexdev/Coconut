@@ -1,22 +1,25 @@
 import json
 from enum import Enum
 from models import db
-import uuid
-from sqlalchemy.dialects.postgresql import UUID
 
-with open("./coconut-shell/src/modules.json") as f:
+with open("./coconut-shell/src/core_modules.json") as f:
     modules_config = json.load(f)
+
+with open("./coconut-shell/src/custom_modules.json") as f:
+    custom_modules_config = json.load(f)
+
+# Merge core and custom modules
+all_modules = modules_config["modules"] + custom_modules_config["modules"]
 
 ModuleEnum = Enum(
     "ModuleEnum",
-    {module["enum"]: module["text"] for module in modules_config["modules"]},
+    {module["enum"]: module["text"] for module in all_modules},
 )
 
-
 class Module(db.Model):
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Enum(ModuleEnum), nullable=False)
-    enabled = db.Column(db.Boolean, default=False)
+    enabled = db.Column(db.Boolean, default=True)
     order = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):

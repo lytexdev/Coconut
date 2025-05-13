@@ -1,84 +1,75 @@
 <template>
     <div class="panel-module system-info">
-        <div class="left-panel">
-            <h2>System Information</h2>
-            <p>CPU Usage: {{ cpuUsage }}%</p>
-            <p>RAM Usage: {{ ramUsage }}%</p>
-            <p>Disk Usage: {{ diskUsage }}</p>
-        </div>
-        <div class="right-panel">
-            <div class="system-info-action">
-                <b>Poweroff computer</b>
-                <button @click="showModal('shutdown')" class="btn btn-shutdowm" title="Poweroff computer">
-                    <img src="@/assets/images/system-shutdown.svg" alt="Click to shutdown the computer" title="Click to shutdown the computer" />
-                </button>
+        <h2>System Information</h2>
+        <div class="panel-module-grid">
+            <div>
+                <p>Uptime: {{ uptime }}</p>
+                <p>CPU Usage: {{ cpuUsage }}%</p>
             </div>
-            <div class="system-info-action">
-                <b>Reboot computer</b>
-                <button @click="showModal('reboot')" class="btn btn-reboot" title="Reboot computer">
-                    <img src="@/assets/images/system-reboot.svg" alt="Click to reboot the computer" title="Click to reboot the computer" />
-                </button>
+            <div>
+                <p>RAM Usage: {{ ramUsage }}</p>
+                <p>RAM Total: {{ ramTotal }}</p>
+                <p>RAM Available: {{ ramAvailable }}</p>
+                <p>RAM Used: {{ ramUsed }}</p>
+            </div>
+            <div>
+                <p>Swap Total: {{ swapTotal }}</p>
+                <p>Swap Used: {{ swapUsed }}</p>
+                <p>Swap Free: {{ swapFree }}</p>
+            </div>
+            <div>
+                <p>Disk Usage: {{ diskPercent }}%</p>
+                <p>Disk Storage: {{ diskUsed }} / {{ diskTotal }}</p>
+                <p>Disk Read: {{ diskRead }}</p>
+                <p>Disk Write: {{ diskWrite }}</p>
             </div>
         </div>
-
-        <Modal v-if="modalVisible" :title="modalTitle" :visible="modalVisible" :confirmText="modalConfirmText"
-            :cancelText="'Cancel'" @close="modalVisible = false" @confirm="performAction">
-            <p>Are you sure you want to {{ modalAction }} the system?</p>
-        </Modal>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Modal from '../Modal.vue'
 
-const cpuUsage = ref('Loading...')
-const ramUsage = ref('Loading...')
-const diskUsage = ref('Loading...')
-const modalVisible = ref(false)
-const modalTitle = ref('')
-const modalConfirmText = ref('')
-const modalAction = ref('')
+const cpuUsage = ref('...')
+const ramUsage = ref('...')
+const ramTotal = ref('...')
+const ramAvailable = ref('...')
+const ramUsed = ref('...')
+const swapTotal = ref('...')
+const swapUsed = ref('...')
+const swapFree = ref('...')
+const diskPercent = ref('...')
+const diskTotal = ref('...')
+const diskUsed = ref('...')
+const diskRead = ref('...')
+const diskWrite = ref('...')
+const uptime = ref('...')
 
-const updateSystemInfo = () => {
-    fetch('/api/system_info')
-        .then((response) => response.json())
-        .then((data) => {
-            cpuUsage.value = data.cpu_usage
-            ramUsage.value = data.ram_usage
-            diskUsage.value = data.disk_used
-        })
-        .catch((error) => console.error('Error fetching system info:', error))
-}
-
-const showModal = (action) => {
-    modalAction.value = action
-    modalTitle.value = action.charAt(0).toUpperCase() + action.slice(1)
-    modalConfirmText.value = action.charAt(0).toUpperCase() + action.slice(1)
-    modalVisible.value = true
-}
-
-const performAction = () => {
-    const action = modalAction.value
-    const urls = {
-        shutdown: '/api/shutdown',
-        reboot: '/api/reboot'
+const updateSystemInfo = async () => {
+    try {
+        const response = await fetch('/api/system_info')
+        const data = await response.json()
+        cpuUsage.value = data.cpu_usage
+        ramUsage.value = data.ram_percent + '%'
+        ramTotal.value = data.ram_total
+        ramAvailable.value = data.ram_available
+        ramUsed.value = data.ram_used
+        swapTotal.value = data.swap_total
+        swapUsed.value = data.swap_used
+        swapFree.value = data.swap_free
+        diskPercent.value = data.disk_percent
+        diskTotal.value = data.disk_total
+        diskUsed.value = data.disk_used
+        diskRead.value = data.disk_read
+        diskWrite.value = data.disk_write
+        uptime.value = data.uptime
+    } catch (error) {
+        console.error('Error fetching system info:', error)
     }
-
-    fetch(urls[action], { method: 'POST' })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(`${action.charAt(0).toUpperCase() + action.slice(1)} initiated`)
-            modalVisible.value = false
-        })
-        .catch((error) => {
-            console.error(`Error ${action}ing:`, error)
-            modalVisible.value = false
-        })
 }
 
 onMounted(() => {
     updateSystemInfo()
-    setInterval(updateSystemInfo, 2000)
+    setInterval(updateSystemInfo, 10000)
 })
 </script>

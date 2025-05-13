@@ -8,8 +8,9 @@
     justify-content: space-between;
     padding: 1rem 15rem;
     background-color: $background-color;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px $box-shadow;
     z-index: 10;
+    user-select: none;
 
     .logo {
         display: flex;

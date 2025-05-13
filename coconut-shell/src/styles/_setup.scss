@@ -1,4 +1,5 @@
 @import './setup/module-selection';
+@import './setup/backup';
 
 .setup-header {
     display: flex;
@@ -9,6 +10,21 @@
 
         &:hover {
             transform: scale(1.1);
+        }
+    }
+}
+
+.setup-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .setup-finish-btn {
+        transition: background-color 0.3s, transform 0.3s;
+
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 40px #28a745;
         }
     }
 }

@@ -4,6 +4,3 @@
         <h1>Coconut</h1>
     </div>
 </template>
-
-<script setup>
-</script>

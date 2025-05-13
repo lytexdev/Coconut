@@ -8,3 +8,19 @@
 		width: 100%;
 	}
 }
+
+.status-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+
+    &.online {
+        background-color: $success-color;
+    }
+
+    &.offline {
+        background-color: $danger-color;
+    }
+}

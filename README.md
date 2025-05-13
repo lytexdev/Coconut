@@ -1,94 +1,61 @@
 # Coconut
 
 ## Overview
-Lightweight and self-hosted Server management tool. It is designed to be simple and easy to use. It is built with Flask and Vue.js.
-
-## Preview
-![Preview](./preview.png)
-
-## Features
-- User Authentication
-- Develope own modules
-- Read System Information
-- Manage Docker Containers
-- Create Backup
-- Shutdown
-- Reboot
+Coconut is a self-hosted and simple Dashboard to manage your server. It's built with Flask and Vue.js.
+**It's still in development and not ready for production.**
 
 ## Technologies
 - **Backend**: Flask
 - **Frontend**: Vue.js, SCSS
+- **Database**: SQLite
 
+## Requirements
+- Unix-based OS
+- Python 3.8+
+- Node.js & npm
 
-## Getting Started
+## Installation
 
-### Docker
-***Soon***
-
-
-### Manual Installation
 **Clone the repository**
 ```bash
-git clone https://github.com/ximmanuel/Coconut.git
+git clone https://github.com/lytexdev/Coconut.git
 cd Coconut
 ```
 
-**Create a virtual environment**
+**Install Coconut**
 ```bash
-python -m venv .venv
+./coco install
 ```
 
-**Activate the virtual environment**
-
-Linux
+**Run Coconut**
 ```bash
-source .venv/bin/activate
-```
-
-Fish
-```bash
-source .venv/bin/activate.fish
-```
-
-**Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-**Copy .env.example to .env and edit it**
-```bash
-cp .env.example .env
-```
-
-**Initialize the database**
-```bash
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
-```
-
-**Run the server**
-```bash
-python app.py
+./coco run
 ```
 
 ## Development
 
-**Install frontend dependencies**
-```bash
-cd coconut-shell/
-npm install
-```
-
 **Build frontend**
 ```bash
-python build.py
+./coco build
 ```
 
+**Create custom module**
+```bash
+./coco create module [name] [VueComponentName]
+```
+*Example:*
+```bash
+# This creates a Vue component, registers it in custom_modules.json & creates an API endpoint for it.
+./coco create module 'My peak Module' MyPeakModule
+```
+
+**Initialize the database**
+```bash
+./coco create db
+```
 
 ## Feature Ideas
-Some interesting features that could be added to: [TODO](TODO.md)
-
+Some interesting features that could be added to - see [TODO](TODO.md) file for details.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

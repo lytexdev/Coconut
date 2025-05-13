@@ -1,13 +1,16 @@
+from math import log
 import os
 import subprocess
 import threading
 from flask import Blueprint, jsonify, request
 from dotenv import load_dotenv
+import logging
 
 load_dotenv()
 
 backup_bp = Blueprint("backup_api", __name__)
 
+# TODO: change .env values to database values
 
 def run_backup(source_path, destination_path, max_backups, result):
     try:
@@ -47,9 +50,11 @@ def create_backup():
     thread.join()
 
     if "error" in result:
+        logging.error(f"Backup failed: {result['error']}")
         return jsonify({"message": "Backup failed", "error": result["error"]}), 500
 
     oldest_backup = result.get("oldest_backup", None)
+    logging.info("Backup created successfully.")
     return jsonify({"message": "Backup created", "oldest_backup": oldest_backup})
 
 
@@ -87,9 +92,8 @@ def delete_backup():
 
     try:
         os.remove(os.path.join(destination_path, backup_to_delete))
+        logging.info(f"{backup_to_delete} deleted successfully.")
         return jsonify({"message": f"{backup_to_delete} deleted successfully"})
     except Exception as e:
-        return (
-            jsonify({"message": f"Error deleting {backup_to_delete}", "error": str(e)}),
-            500,
-        )
+        logging.error(f"Error deleting {backup_to_delete}: {e}")
+        return (jsonify({"message": f"Error deleting {backup_to_delete}", "error": str(e)}), 500)

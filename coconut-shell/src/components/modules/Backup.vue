@@ -1,18 +1,20 @@
 <template>
     <div class="panel-module">
         <h2>Backups</h2>
+        
+        <div class="panel-module-list">
+            <div class="backup-management">
+                <p>Current backups: {{ backupCount }}</p>
+                <button :class="buttonClass" :disabled="isDisabled" @click="createBackup">{{ buttonText }}</button>
+            </div>
 
-        <div class="backup-management">
-            <p>Current backups: {{ backupCount }}</p>
-            <button :class="buttonClass" :disabled="isDisabled" @click="createBackup">{{ buttonText }}</button>
+            <ul class="backup-list">
+                <li v-for="backup in backups" :key="backup">
+                    {{ backup }}
+                    <button @click="confirmDeleteBackup(backup)" class="btn btn-danger">Remove</button>
+                </li>
+            </ul>
         </div>
-
-        <ul class="backup-list">
-            <li v-for="backup in backups" :key="backup">
-                {{ backup }}
-                <button @click="confirmDeleteBackup(backup)" class="btn btn-danger">Remove</button>
-            </li>
-        </ul>
 
         <Modal v-if="showModal" :title="'Delete Backup'" :visible="showModal" :confirmText="'Delete'"
             :cancelText="'Cancel'" @close="showModal = false" @confirm="deleteBackup">
